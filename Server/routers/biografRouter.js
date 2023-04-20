@@ -6,7 +6,7 @@ const biografRouter = new Router();
 biografRouter.get("/api/biograf", (req, res) => {
     db.query('SELECT * from theaterdb.biografer', (err, rows, fields) => {
         if (err) throw err
-        res.send({ Biografer: rows })
+        res.send({ biografer: rows })
     })
 
 })
