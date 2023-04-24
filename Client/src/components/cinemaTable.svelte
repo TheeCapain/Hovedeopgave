@@ -24,8 +24,8 @@
             <tr>
                 <th scope="col" class="px-6 py-3"> Cinema name </th>
                 <th scope="col" class="px-6 py-3"> cinemaAdress </th>
-                <th scope="col" class="px-6 py-3"> closedDate </th>
-                <th scope="col" class="px-6 py-3"> openedDate </th>
+                <th scope="col" class="px-6 py-3"> opened Date </th>
+                <th scope="col" class="px-6 py-3"> closed Date </th>
             </tr>
         </thead>
         <tbody>
