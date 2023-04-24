@@ -22,10 +22,16 @@
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
         >
             <tr>
-                <th scope="col" class="px-6 py-3"> Cinema name </th>
-                <th scope="col" class="px-6 py-3"> cinemaAdress </th>
-                <th scope="col" class="px-6 py-3"> opened Date </th>
-                <th scope="col" class="px-6 py-3"> closed Date </th>
+
+                <th scope="col" class="px-6 py-3">Navn</th>
+                <th scope="col" class="px-6 py-3">Adresse</th>
+                <th scope="col" class="px-6 py-3">Postnummer</th>
+                <th scope="col" class="px-6 py-3">By</th>
+                <th scope="col" class="px-6 py-3">Åbnet</th>
+                <th scope="col" class="px-6 py-3">Lukket</th>             
+                <th scope="col" class="px-6 py-3">Status</th>
+
+
             </tr>
         </thead>
         <tbody>
@@ -33,8 +39,11 @@
                 <CinemaData
                     cinemaName={cinema.Biograf}
                     cinemaAdress={cinema.Adresse}
+                    cinemaPostNr={cinema.Postnr}
+                    cinemaBy={cinema.By}
                     closedDate={cinema.Lukket}
                     openedDate={cinema.Åbnet}
+                    cinemaStatus={cinema.Status}
                 />
             {/each}
         </tbody>
