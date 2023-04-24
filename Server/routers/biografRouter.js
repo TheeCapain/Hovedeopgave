@@ -10,5 +10,14 @@ biografRouter.get("/api/biograf", (req, res) => {
     })
 
 })
+biografRouter.post("/api/biograf/search", (req, res) => {
+    console.log(req.body)
+    let cinemaname = req.body.movietitle + "%"
+    db.query('SELECT * from theaterdb.biografer WHERE Biograf LIKE (?)', [cinemaname], (err, rows, fields) => {
+        if (err) throw err
+        res.send({ biografer: rows })
+    })
+
+})
 
 export default biografRouter

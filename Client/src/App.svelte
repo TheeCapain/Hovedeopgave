@@ -1,7 +1,8 @@
 <script>
   import "flowbite";
   import "./app.css";
-  import BiografTable from "./components/cinemaTable.svelte";
+  import Sidebar from "./components/sidebar.svelte";
+
 </script>
 
-<BiografTable/>
+<Sidebar />

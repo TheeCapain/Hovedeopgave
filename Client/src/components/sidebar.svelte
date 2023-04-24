@@ -1,0 +1,128 @@
+<script>
+    import CinemaTable from "./cinemaTable.svelte";
+
+    let search_list = [];
+    let name = "";
+
+    let cinema_list = [];
+
+
+    async function searchMovie() {
+        cinema_list = [];
+        const movie_search = {
+            movietitle: name,
+        };
+        let response = await fetch("http://localhost:8080/api/biograf/search", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(movie_search),
+        }).then((response) => response.json());
+        cinema_list = response.biografer;
+    }
+</script>
+
+<aside
+    id="default-sidebar"
+    class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar"
+>
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a
+                    href="/"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                    <svg
+                        aria-hidden="true"
+                        class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
+                            d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
+                        /></svg
+                    >
+                    <span class="ml-3">Biograf Database</span>
+                </a>
+            </li>
+            <li>
+                <form>
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                        >Search</label
+                    >
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                /></svg
+                            >
+                        </div>
+                        <input
+                            type="search"
+                            id="default-search"
+                            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Bio navn"
+                            bind:value={name}
+                            required
+                        />
+                        <button
+                            on:click={searchMovie}
+                            type="button"
+                            class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >Search</button
+                        >
+                    </div>
+                </form>
+            </li>
+            <li>
+                <div>
+                    <label
+                        for="customRange3"
+                        class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+                        >Årstal</label
+                    >
+                    <input
+                        type="range"
+                        class="transparent h-1.5 w-full cursor-pointer appearance-none rounded-lg border-transparent bg-neutral-200"
+                        min="0"
+                        max="5"
+                        step="0.5"
+                        id="customRange3"
+                    />
+                </div>
+            </li>
+            <li>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="" class="sr-only peer" />
+                    <div
+                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                    />
+                    <span
+                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >Kan køre 70mm</span
+                    >
+                </label>
+            </li>
+            <li />
+        </ul>
+    </div>
+</aside>
+
+<CinemaTable cinema_list={cinema_list} />
