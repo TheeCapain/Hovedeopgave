@@ -32,15 +32,17 @@
             {/if}
 
             {#each cinema_list as cinema}
-                <CinemaData
-                    cinemaName={cinema.Biograf}
-                    cinemaAdress={cinema.Adresse}
-                    cinemaPostNr={cinema.Postnr}
-                    cinemaBy={cinema.By}
-                    closedDate={cinema.Lukket}
-                    openedDate={cinema.Åbnet}
-                    cinemaStatus={cinema.Status}
-                />
+                {#if cinema.biograf_postnr !== ""}
+                    <CinemaData
+                        cinemaName={cinema.biograf_navn}
+                        cinemaAdress={cinema.biograf_adresse}
+                        cinemaPostNr={cinema.biograf_postnr}
+                        cinemaBy={cinema.biograf_by}
+                        closedDate={cinema.biograf_lukket}
+                        openedDate={cinema.biograf_åbnet}
+                        cinemaStatus={cinema.biograf_status}
+                    />
+                {/if}
             {:else}
                 <h1 class="px-6 py-3">Indlæser...</h1>
             {/each}

@@ -1,11 +1,9 @@
 <script>
     import CinemaTable from "./cinemaTable.svelte";
-
-    let search_list = [];
-    let name = "";
+    let name;
+    let year = 1900;
 
     let cinema_list = [];
-
 
     async function searchMovie() {
         cinema_list = [];
@@ -101,12 +99,13 @@
                     <input
                         type="range"
                         class="transparent h-1.5 w-full cursor-pointer appearance-none rounded-lg border-transparent bg-neutral-200"
-                        min="0"
-                        max="5"
+                        min="1900"
+                        max="2023"
                         step="0.5"
                         id="customRange3"
                     />
                 </div>
+                <p >{year}</p>
             </li>
             <li>
                 <label class="relative inline-flex items-center cursor-pointer">
@@ -125,4 +124,4 @@
     </div>
 </aside>
 
-<CinemaTable cinema_list={cinema_list} />
+<CinemaTable {cinema_list} />
