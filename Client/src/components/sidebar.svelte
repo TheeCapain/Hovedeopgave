@@ -1,7 +1,8 @@
 <script>
     import CinemaTable from "./cinemaTable.svelte";
     let name;
-    let year = 1900;
+    let yearStart = 1900;
+    let yearEnd = 2023;
 
     let cinema_list = [];
 
@@ -11,6 +12,22 @@
             movietitle: name,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(movie_search),
+        }).then((response) => response.json());
+        cinema_list = response.biografer;
+    }
+
+    async function searchYear() {
+        cinema_list = [];
+        const movie_search = {
+            yearStart: yearStart,
+            yearEnd: yearEnd,
+        };
+        let response = await fetch("http://localhost:8080/api/biograf/year", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -105,21 +122,34 @@
                         id="customRange3"
                     />
                 </div>
-                <p >{year}</p>
+                <p>{yearStart}</p>
+                <p>{yearEnd}</p>
             </li>
             <li>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" value="" class="sr-only peer" />
-                    <div
-                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-                    />
-                    <span
-                        class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >Kan køre 70mm</span
-                    >
-                </label>
+                <span class="ml-3">Biografer åbnet mellem:</span>
+                <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Årstal Start"
+                    bind:value={yearStart}
+                    required
+                />
+                <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Årstal Slut"
+                    bind:value={yearEnd}
+                    required
+                />
+                <button
+                    on:click={searchYear}
+                    type="button"
+                    class="text-white absolute right-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >Search</button
+                >
             </li>
-            <li />
         </ul>
     </div>
 </aside>
