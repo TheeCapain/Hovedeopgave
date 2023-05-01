@@ -4,7 +4,7 @@ import db from '../database/connection.js';
 const biografRouter = new Router();
 
 biografRouter.get("/api/biograf", (req, res) => {
-    db.query('SELECT * from biografer ORDER BY biograf_postnr', (err, rows, fields) => {
+    db.query('Select cinema_name, cinema_opened, cinema_closed, cinema_status, cinema_alt_name, address_road, address_city, address_postcode from biorama.cinemas inner join biorama.addresses ON address_id = fk_address_id', (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
     })
@@ -12,7 +12,7 @@ biografRouter.get("/api/biograf", (req, res) => {
 })
 biografRouter.post("/api/biograf/search", (req, res) => {
     let cinemaname = "%" + req.body.movietitle + "%"
-    db.query('SELECT * from biografer WHERE biograf_navn LIKE (?)', [cinemaname], (err, rows, fields) => {
+    db.query('SELECT * from cinemas WHERE cinema_name LIKE (?)', [cinemaname], (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
     })
