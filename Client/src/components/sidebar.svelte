@@ -64,6 +64,24 @@
                 </a>
             </li>
             <li>
+                <a
+                    href="/"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                    <svg
+                        aria-hidden="true"
+                        class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
+                            d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
+                        /></svg
+                    >
+                    <span class="ml-3">Filmpremiere Database</span>
+                </a>
+            </li>
+            <li>
                 <form>
                     <label
                         for="default-search"
@@ -149,6 +167,66 @@
                     class="text-white absolute right-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >Search</button
                 >
+            </li>
+            <li>
+                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                    Postnummer
+                </h3>
+                <ul
+                    class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                >
+                    <li
+                        class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"
+                    >
+                        <div class="flex items-center pl-3">
+                            <input
+                                id="vue-checkbox"
+                                type="checkbox"
+                                value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            />
+                            <label
+                                for="vue-checkbox"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >2000</label
+                            >
+                        </div>
+                    </li>
+                    <li
+                        class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"
+                    >
+                        <div class="flex items-center pl-3">
+                            <input
+                                id="react-checkbox"
+                                type="checkbox"
+                                value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            />
+                            <label
+                                for="react-checkbox"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >2300</label
+                            >
+                        </div>
+                    </li>
+                    <li
+                        class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"
+                    >
+                        <div class="flex items-center pl-3">
+                            <input
+                                id="react-checkbox"
+                                type="checkbox"
+                                value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            />
+                            <label
+                                for="react-checkbox"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >etc..</label
+                            >
+                        </div>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
