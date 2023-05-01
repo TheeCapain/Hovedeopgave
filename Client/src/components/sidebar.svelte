@@ -1,4 +1,5 @@
 <script>
+    import { each } from "svelte/internal";
     import CinemaTable from "./cinemaTable.svelte";
     import PostnrCheckbox from "./postnrCheckbox.svelte";
     import { onMount } from "svelte";
@@ -40,7 +41,7 @@
         cinema_list = response.biografer;
     }
 
-    onMount(async function getBiografer() {
+    onMount(async function biograpostnr() {
         let response = await fetch(
             "http://localhost:8080/api/adresse/postnr"
         ).then((response) => response.json());
@@ -182,13 +183,49 @@
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Postnummer
                 </h3>
-                <ul
-                    class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                <button
+                    id="dropdownBgHoverButton"
+                    data-dropdown-toggle="dropdownBgHover"
+                    class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button"
+                    >Vælg Postnr<svg
+                        class="w-4 h-4 ml-2"
+                        aria-hidden="true"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                        /></svg
+                    ></button
                 >
-                    {#each postCodeList as postCode}
-                        <PostnrCheckbox postnr={postCode.address_postcode} />
-                    {/each}
-                </ul>
+                <div
+                    id="dropdownBgHover"
+                    class="z-10 h-72 hidden overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                >
+                    <ul
+                        class="p-3 w-full space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownBgHoverButton"
+                    >
+                        {#each postCodeList as code}
+                            <PostnrCheckbox
+                                postnr={code.address_postcode}
+                                cityname={code.address_city}
+                            />
+                        {/each}
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button
+                    type="button"
+                    class="w-full text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >Search</button
+                >
             </li>
         </ul>
     </div>
