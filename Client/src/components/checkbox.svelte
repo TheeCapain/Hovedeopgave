@@ -1,6 +1,6 @@
 <script>
-    export let cityname;
-    export let postnr;
+    export let name;
+    export let description;
 </script>
 
 <li>
@@ -16,7 +16,7 @@
         <label
             for="checkbox-item-4"
             class="w-full ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-            >{postnr} {cityname}</label
+            >{name} {description}</label
         >
     </div>
 </li>

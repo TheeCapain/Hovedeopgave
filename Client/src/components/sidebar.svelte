@@ -1,37 +1,23 @@
 <script>
-    import { each } from "svelte/internal";
     import CinemaTable from "./cinemaTable.svelte";
-    import PostnrCheckbox from "./postnrCheckbox.svelte";
     import { onMount } from "svelte";
+    import Checkbox from "./checkbox.svelte";
     let name;
     let yearStart = 1900;
     let yearEnd = 2023;
 
     let cinema_list = [];
     let postCodeList = [];
+    let statusList = [];
 
-    async function searchMovie() {
+    async function searchTheater() {
         cinema_list = [];
         const movie_search = {
             movietitle: name,
+            yearEnd: yearEnd,
+            yearStart: yearStart,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(movie_search),
-        }).then((response) => response.json());
-        cinema_list = response.biografer;
-    }
-
-    async function searchYear() {
-        cinema_list = [];
-        const movie_search = {
-            yearStart: yearStart,
-            yearEnd: yearEnd,
-        };
-        let response = await fetch("http://localhost:8080/api/biograf/year", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -46,6 +32,13 @@
             "http://localhost:8080/api/adresse/postnr"
         ).then((response) => response.json());
         postCodeList = response.postnr;
+    });
+
+    onMount(async function biograpostnr() {
+        let response = await fetch("http://localhost:8080/api/status").then(
+            (response) => response.json()
+        );
+        statusList = response.status;
     });
 </script>
 
@@ -126,36 +119,11 @@
                             bind:value={name}
                             required
                         />
-                        <button
-                            on:click={searchMovie}
-                            type="button"
-                            class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            >Search</button
-                        >
                     </div>
                 </form>
             </li>
             <li>
-                <div>
-                    <label
-                        for="customRange3"
-                        class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
-                        >Årstal</label
-                    >
-                    <input
-                        type="range"
-                        class="transparent h-1.5 w-full cursor-pointer appearance-none rounded-lg border-transparent bg-neutral-200"
-                        min="1900"
-                        max="2023"
-                        step="0.5"
-                        id="customRange3"
-                    />
-                </div>
-                <p>{yearStart}</p>
-                <p>{yearEnd}</p>
-            </li>
-            <li>
-                <span class="ml-3">Biografer åbnet mellem:</span>
+                <span class="ml-3">Biografer aktive mellem:</span>
                 <input
                     type="search"
                     id="default-search"
@@ -172,12 +140,6 @@
                     bind:value={yearEnd}
                     required
                 />
-                <button
-                    on:click={searchYear}
-                    type="button"
-                    class="text-white absolute right-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >Search</button
-                >
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
@@ -212,9 +174,50 @@
                         aria-labelledby="dropdownBgHoverButton"
                     >
                         {#each postCodeList as code}
-                            <PostnrCheckbox
-                                postnr={code.address_postcode}
-                                cityname={code.address_city}
+                            <Checkbox
+                                name={code.address_postcode}
+                                description={code.address_city}
+                            />
+                        {/each}
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                    Status
+                </h3>
+                <button
+                    id="dropdownBgHoverButton"
+                    data-dropdown-toggle="dropdownBgHover"
+                    class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button"
+                    >Vælg Status<svg
+                        class="w-4 h-4 ml-2"
+                        aria-hidden="true"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                        /></svg
+                    ></button
+                >
+                <div
+                    id="dropdownBgHover"
+                    class="z-10 h-72 hidden overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                >
+                    <ul
+                        class="p-3 w-full space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownBgHoverButton"
+                    >
+                        {#each statusList as status}
+                            <Checkbox
+                                name={status.status_description}
+                                description={""}
                             />
                         {/each}
                     </ul>
@@ -222,6 +225,7 @@
             </li>
             <li>
                 <button
+                    on:click={searchTheater}
                     type="button"
                     class="w-full text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >Search</button

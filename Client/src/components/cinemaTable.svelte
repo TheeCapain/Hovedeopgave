@@ -27,22 +27,23 @@
             </tr>
         </thead>
         <tbody>
-            {#if cinema_list.length === 0}
-                <h1 class="px-6 py-3">Ingen resultater</h1>
-            {/if}
-
             {#each cinema_list as cinema}
                 <CinemaData
                     cinemaName={cinema.cinema_name}
                     closedDate={cinema.cinema_closed}
                     openedDate={cinema.cinema_opened}
-                    cinemaStatus={cinema.cinema_status}
+                    cinemaStatus={cinema.status_description}
                     cinemaAdress={cinema.address_road}
                     cinemaPostNr={cinema.address_postcode}
                     cinemaBy={cinema.address_city}
                 />
             {:else}
-                <h1 class="px-6 py-3">Indlæser...</h1>
+            <button type="button" class="w-full text-white bg-blue-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>
+                <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+                  <!-- ... -->
+                </svg>
+                Indlæser biografer...
+              </button>
             {/each}
         </tbody>
     </table>
