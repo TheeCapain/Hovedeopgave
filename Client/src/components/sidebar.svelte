@@ -5,10 +5,14 @@
     let name;
     let yearStart = 1900;
     let yearEnd = 2023;
+    let postnr = 0;
+    let status = "status"
 
     let cinema_list = [];
     let postCodeList = [];
     let statusList = [];
+
+    let selected = [];
 
     async function searchTheater() {
         cinema_list = [];
@@ -145,6 +149,14 @@
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Postnummer
                 </h3>
+                <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="postnr"
+                    bind:value={postnr}
+                    required
+                />
                 <button
                     id="dropdownBgHoverButton"
                     data-dropdown-toggle="dropdownBgHover"
@@ -186,6 +198,14 @@
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Status
                 </h3>
+                <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Årstal Slut"
+                    bind:value={status}
+                    required
+                />
                 <button
                     id="dropdownBgHoverButton"
                     data-dropdown-toggle="dropdownBgHover"
