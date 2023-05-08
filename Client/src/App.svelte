@@ -9,8 +9,8 @@
   import { onMount } from "svelte";
   import Checkbox from "./components/checkbox.svelte";
   let name;
-  let yearStart = 1900;
-  let yearEnd = 2023;
+  let yearStart = 1940;
+  let yearEnd = 1944;
   let postNr = "";
   let status = "";
 
@@ -20,7 +20,6 @@
   let postCodeList = [];
 
   async function searchTheater() {
-    cinema_list = [];
     const movie_search = {
       movietitle: name,
       yearEnd: yearEnd,
@@ -58,7 +57,7 @@
     <Admin />
   </Route>
   <Route path="cinemas">
-    <Cinemas cinema_list = {cinema_list}/>
+    <Cinemas {cinema_list} />
   </Route>
   <Route path="premieres">
     <Premieres />
