@@ -8,10 +8,9 @@
         let response = await fetch("http://localhost:8080/api/movies").then(
             (response) => response.json()
         );
-        premiere_list = response.biografer;
-        listlength = premiere_list.length;
+        premiere_list = response.movies;
         console.log(premiere_list)
     });
 </script>
 
-<PremiereTable {premiere_list} {listlength} />
+<PremiereTable {premiere_list}/>

@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
-    let cinema_list = [];
+    export let cinema_list = [];
     let listlength;
 
     onMount(async function getBiografer() {
