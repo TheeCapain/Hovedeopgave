@@ -1,18 +1,17 @@
 <script>
-    import CinemaTable from "./cinemaTable.svelte";
+    import { Router, Route, Link } from "svelte-navigator";
     import { onMount } from "svelte";
     import Checkbox from "./checkbox.svelte";
     let name;
     let yearStart = 1900;
     let yearEnd = 2023;
-    let postnr = 0;
-    let status = "status"
+    let postNr = "";
+    let status = "";
+
+    let listlength;
 
     let cinema_list = [];
     let postCodeList = [];
-    let statusList = [];
-
-    let selected = [];
 
     async function searchTheater() {
         cinema_list = [];
@@ -20,6 +19,8 @@
             movietitle: name,
             yearEnd: yearEnd,
             yearStart: yearStart,
+            postnr: postNr,
+            status: status,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
             method: "POST",
@@ -29,6 +30,7 @@
             body: JSON.stringify(movie_search),
         }).then((response) => response.json());
         cinema_list = response.biografer;
+        listlength = cinema_list.length;
     }
 
     onMount(async function biograpostnr() {
@@ -38,11 +40,10 @@
         postCodeList = response.postnr;
     });
 
-    onMount(async function biograpostnr() {
+    onMount(async function biografStatus() {
         let response = await fetch("http://localhost:8080/api/status").then(
             (response) => response.json()
         );
-        statusList = response.status;
     });
 </script>
 
@@ -53,42 +54,79 @@
 >
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
-            <li>
-                <a
-                    href="/"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                        aria-hidden="true"
-                        class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
-                            d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
-                        /></svg
-                    >
-                    <span class="ml-3">Biograf Database</span>
-                </a>
-            </li>
-            <li>
-                <a
-                    href="/"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                        aria-hidden="true"
-                        class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
-                            d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
-                        /></svg
-                    >
-                    <span class="ml-3">Filmpremiere Database</span>
-                </a>
-            </li>
+            <Router>
+                <Link to="/admin">
+                    <li>
+                        <a
+                            href="/"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                                />
+                            </svg>
+
+                            <span class="ml-3">Admin</span>
+                        </a>
+                    </li>
+                </Link>
+                <Link to="/cinemas">
+                    <li>
+                        <a
+                            href="/"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"
+                                /><path
+                                    d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
+                                /></svg
+                            >
+
+                            <span class="ml-3">Biograf Database</span>
+                        </a>
+                    </li>
+                </Link>
+                <Link to="/premieres">
+                    <li>
+                        <a
+                            href="/"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"
+                                /><path
+                                    d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
+                                /></svg
+                            >
+
+                            <span class="ml-3">Filmpremiere Database</span>
+                        </a>
+                    </li>
+                </Link>
+            </Router>
             <li>
                 <form>
                     <label
@@ -154,7 +192,7 @@
                     id="default-search"
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="postnr"
-                    bind:value={postnr}
+                    bind:value={postNr}
                     required
                 />
                 <button
@@ -202,46 +240,10 @@
                     type="search"
                     id="default-search"
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Årstal Slut"
+                    placeholder="Status"
                     bind:value={status}
                     required
                 />
-                <button
-                    id="dropdownBgHoverButton"
-                    data-dropdown-toggle="dropdownBgHover"
-                    class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button"
-                    >Vælg Status<svg
-                        class="w-4 h-4 ml-2"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 9l-7 7-7-7"
-                        /></svg
-                    ></button
-                >
-                <div
-                    id="dropdownBgHover"
-                    class="z-10 h-72 hidden overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                >
-                    <ul
-                        class="p-3 w-full space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownBgHoverButton"
-                    >
-                        {#each statusList as status}
-                            <Checkbox
-                                name={status.status_description}
-                                description={""}
-                            />
-                        {/each}
-                    </ul>
-                </div>
             </li>
             <li>
                 <button
@@ -254,5 +256,3 @@
         </ul>
     </div>
 </aside>
-
-<CinemaTable {cinema_list} />
