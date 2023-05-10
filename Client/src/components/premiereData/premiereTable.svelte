@@ -1,7 +1,16 @@
 <script>
     import PremiereData from "./premiereData.svelte";
-    export let premiere_list = [];
     import { onMount } from "svelte";
+
+    export let premiere_list = [];
+    export let listlength;
+    onMount(async function getPremieres() {
+        let response = await fetch("http://localhost:8080/api/premieres").then(
+            (response) => response.json()
+        );
+        premiere_list = response.movies;
+        listlength = premiere_list.length;
+    });
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -21,12 +30,12 @@
         <tbody>
             {#each premiere_list as cinema}
                 <PremiereData
-                    movieTitle={cinema.Titel}
-                    Originaltitle={cinema.Originaltitel}
-                    distributer={cinema.Distributør}
-                    year={cinema.År}
-                    Premierebiograf={""}
-                    Censur={cinema.Censur}
+                    movieTitle={cinema.movie_title}
+                    Originaltitle={cinema.original_title}
+                    distributer={cinema.distributor_name}
+                    year={cinema.premiere_year}
+                    Premierebiograf={cinema.Premiere_period}
+                    Censur={cinema.rating}
                 />
             {/each}
             <button

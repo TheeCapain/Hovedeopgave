@@ -17,27 +17,46 @@ biografRouter.get("/api/biograf", (req, res) => {
 })
 
 biografRouter.post("/api/biograf/search", (req, res) => {
-    console.log(req.body)
-    if (req.body.movietitle === undefined) {
-        req.body.movietitle = ""
-    }
-    let cinemaname = "%" + req.body.movietitle + "%"
-    let status = "%" + req.body.status + "%"
-    let postnr = "%" + req.body.postnr + "%"
+    try {
 
-    db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description
+        console.log(req.body)
+        if (req.body.cinemaName === '' || req.body.cinemaName === undefined) {
+            req.body.cinemaName = '%'
+        }
+
+        if(req.body.yearStart === ''){
+            req.body.yearStart = '1900'
+        }
+        if(req.body.yearEnd === ''){
+            req.body.yearEnd = '2023'
+        }
+
+        let cinemaname = req.body.cinemaName + '%'
+        let status = req.body.status + '%'
+        let postnr = req.body.postnr + '%'
+        let yearStart = req.body.yearStart;
+        let yearEnd = req.body.yearEnd;
+
+        db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description
     FROM cinemas
     INNER JOIN biorama.addresses ON address_id = fk_address_id
     INNER JOIN biorama.status ON status_id = fk_status_id
     WHERE cinema_name LIKE (?)
-    AND YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between 1940 and 1944 or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < 1940
-    AND YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between 1940 and 1944 or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) < 1944
-    AND status_description like (?)
+    AND (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
+    AND (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between (?) and (?) or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) > (?))
+    AND YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) != ''
+    AND YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) != ''
     AND address_postcode like (?)
-    ORDER by cinema_name`, [cinemaname, status, postnr], (err, rows, fields) => {
-        if (err) throw err
-        res.send({ biografer: rows })
-    })
+    AND status_description like (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status], (err, rows, fields) => {
+
+            if (err) throw err
+            res.send({ biografer: rows })
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
 
 })
 

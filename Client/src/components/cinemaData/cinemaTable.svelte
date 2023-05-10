@@ -1,16 +1,8 @@
 <script>
     import CinemaData from "./cinemaData.svelte";
+    import { onMount } from "svelte";
     export let cinema_list = [];
     export let listlength;
-    import { onMount } from "svelte";
-
-    onMount(async function getBiografer() {
-        let response = await fetch("http://localhost:8080/api/biograf").then(
-            (response) => response.json()
-        );
-        cinema_list = response.biografer;
-        listlength = cinema_list.length;
-    });
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -43,28 +35,31 @@
                     Ingen resultater
                 </button>
             {:else}
-                {#each cinema_list as cinema}
-                    <CinemaData
-                        cinemaName={cinema.cinema_name}
-                        closedDate={cinema.cinema_closed}
-                        openedDate={cinema.cinema_opened}
-                        cinemaStatus={cinema.status_description}
-                        cinemaAdress={cinema.address_road}
-                        cinemaPostNr={cinema.address_postcode}
-                        cinemaBy={cinema.address_city}
-                    />
-                {/each}
-                <button
-                    type="button"
-                    class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    disabled
-                >
-                    <svg
-                        class="animate-spin h-5 w-5 mr-3 ..."
-                        viewBox="0 0 24 24"
-                    />
-                    Indlæser biografer...
-                </button>
+                {#await cinema_list}
+                    <button
+                        type="button"
+                        class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        disabled
+                    >
+                        <svg
+                            class="animate-spin h-5 w-5 mr-3 ..."
+                            viewBox="0 0 24 24"
+                        />
+                        Indlæser biografer...
+                    </button>
+                {:then cinema_list}
+                    {#each cinema_list as cinema}
+                        <CinemaData
+                            cinemaName={cinema.cinema_name}
+                            closedDate={cinema.cinema_closed}
+                            openedDate={cinema.cinema_opened}
+                            cinemaStatus={cinema.status_description}
+                            cinemaAdress={cinema.address_road}
+                            cinemaPostNr={cinema.address_postcode}
+                            cinemaBy={cinema.address_city}
+                        />
+                    {/each}
+                {/await}
             {/if}
         </tbody>
     </table>
