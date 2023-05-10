@@ -2,32 +2,32 @@
     import { onMount } from "svelte";
     import PremiereTable from "../components/premiereData/premiereTable.svelte";
 
-    import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
-    import Checkbox from "../components/checkbox.svelte";
-
-    let name;
+    let movieName = "";
     let yearStart = 1900;
     let yearEnd = 2023;
     let country = "";
     let distributør = "";
     let premiere_list = [];
 
-    let listlength;
-
-    let cinema_list = [];
-    let postCodeList = [];
+    onMount(async function getMovies() {
+        let response = await fetch("http://localhost:8080/api/premieres").then(
+            (response) => response.json()
+        );
+        premiere_list = response.movies;
+        console.log(premiere_list)
+    });
 
     async function searchMovies() {
-        cinema_list = [];
+        premiere_list = [];
         const movie_search = {
-            movieName: name,
+            movieName: movieName,
             yearEnd: yearEnd,
             yearStart: yearStart,
             country: country,
             distributor: distributør,
         };
         let response = await fetch(
-            "http://localhost:8080/api/premiere/search",
+            "http://localhost:8080/api/premieres/search",
             {
                 method: "POST",
                 headers: {
@@ -36,31 +36,8 @@
                 body: JSON.stringify(movie_search),
             }
         ).then((response) => response.json());
-        premiere_list = response.biografer;
-        listlength = cinema_list.length;
-        console.log(cinema_list);
-    }
-
-    onMount(async function biograpostnr() {
-        let response = await fetch(
-            "http://localhost:8080/api/adresse/postnr"
-        ).then((response) => response.json());
-        postCodeList = response.postnr;
-    });
-
-    onMount(async function biografStatus() {
-        let response = await fetch("http://localhost:8080/api/status").then(
-            (response) => response.json()
-        );
-    });
-
-    onMount(async function getBiografer() {
-        let response = await fetch("http://localhost:8080/api/movies").then(
-            (response) => response.json()
-        );
         premiere_list = response.movies;
-        console.log(premiere_list);
-    });
+    }
 </script>
 
 <aside
@@ -100,7 +77,7 @@
                             id="default-search"
                             class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Film navn"
-                            bind:value={name}
+                            bind:value={movieName}
                             required
                         />
                     </div>
@@ -127,7 +104,7 @@
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
-                    Postnummer
+                    Land
                 </h3>
                 <input
                     type="search"
@@ -137,42 +114,6 @@
                     bind:value={country}
                     required
                 />
-                <button
-                    id="dropdownBgHoverButton"
-                    data-dropdown-toggle="dropdownBgHover"
-                    class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button"
-                    >Vælg Postnr<svg
-                        class="w-4 h-4 ml-2"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 9l-7 7-7-7"
-                        /></svg
-                    ></button
-                >
-                <div
-                    id="dropdownBgHover"
-                    class="z-10 h-72 hidden overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                >
-                    <ul
-                        class="p-3 w-full space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownBgHoverButton"
-                    >
-                        {#each postCodeList as code}
-                            <Checkbox
-                                name={code.address_postcode}
-                                description={code.address_city}
-                            />
-                        {/each}
-                    </ul>
-                </div>
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
@@ -212,4 +153,4 @@
     </div>
 </aside>
 
-<PremiereTable {premiere_list} {listlength} />
+<PremiereTable {premiere_list} />

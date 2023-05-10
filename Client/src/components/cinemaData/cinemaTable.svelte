@@ -59,6 +59,19 @@
                             cinemaBy={cinema.address_city}
                         />
                     {/each}
+                    {#if cinema_list.length == 0}
+                        <button
+                            type="button"
+                            class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            disabled
+                        >
+                            <svg
+                                class="animate-spin h-5 w-5 mr-3 ..."
+                                viewBox="0 0 24 24"
+                            />
+                            Ingen resultater
+                        </button>
+                    {/if}
                 {/await}
             {/if}
         </tbody>

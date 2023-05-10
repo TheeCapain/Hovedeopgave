@@ -24,10 +24,10 @@ biografRouter.post("/api/biograf/search", (req, res) => {
             req.body.cinemaName = '%'
         }
 
-        if(req.body.yearStart === ''){
+        if (req.body.yearStart === '') {
             req.body.yearStart = '1900'
         }
-        if(req.body.yearEnd === ''){
+        if (req.body.yearEnd === '') {
             req.body.yearEnd = '2023'
         }
 

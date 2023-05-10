@@ -1,16 +1,6 @@
 <script>
     import PremiereData from "./premiereData.svelte";
-    import { onMount } from "svelte";
-
     export let premiere_list = [];
-    export let listlength;
-    onMount(async function getPremieres() {
-        let response = await fetch("http://localhost:8080/api/premieres").then(
-            (response) => response.json()
-        );
-        premiere_list = response.movies;
-        listlength = premiere_list.length;
-    });
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -28,27 +18,45 @@
             </tr>
         </thead>
         <tbody>
-            {#each premiere_list as cinema}
-                <PremiereData
-                    movieTitle={cinema.movie_title}
-                    Originaltitle={cinema.original_title}
-                    distributer={cinema.distributor_name}
-                    year={cinema.premiere_year}
-                    Premierebiograf={cinema.Premiere_period}
-                    Censur={cinema.rating}
-                />
-            {/each}
+            {#await premiere_list}
+                <button
+                    type="button"
+                    class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    disabled
+                >
+                    <svg
+                        class="animate-spin h-5 w-5 mr-3 ..."
+                        viewBox="0 0 24 24"
+                    />
+                    Indlæser biografer...
+                </button>
+            {:then premiere_list}
+                {#each premiere_list as movie}
+                    <PremiereData
+                        movieTitle={movie.movie_title}
+                        Originaltitle={movie.original_title}
+                        distributer={movie.distributor_name}
+                        year={movie.premiere_year}
+                        Premierebiograf={movie.Premiere_period}
+                        Censur={movie.rating}
+                    />
+                {/each}
+            {#if premiere_list.length == 0}
             <button
-                type="button"
-                class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                disabled
-            >
-                <svg
-                    class="animate-spin h-5 w-5 mr-3 ..."
-                    viewBox="0 0 24 24"
-                />
-                Indlæser biografer...
-            </button>
+            type="button"
+            class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            disabled
+        >
+            <svg
+                class="animate-spin h-5 w-5 mr-3 ..."
+                viewBox="0 0 24 24"
+            />
+            Ingen resultater
+        </button>
+            {/if}
+            {:catch error}
+                <p style="color: red">{error.message}</p>
+            {/await}
         </tbody>
     </table>
 </div>

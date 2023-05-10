@@ -7,7 +7,7 @@
     export let Censur;
 </script>
 
-<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 group/item hover:bg-slate-100">
     <td class="px-6 py-4">
         {movieTitle}
     </td>
