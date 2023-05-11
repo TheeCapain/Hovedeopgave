@@ -3,31 +3,27 @@
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
     import Checkbox from "../components/checkbox.svelte";
 
-    let name;
+    let name = '';
     let yearStart = 1900;
     let yearEnd = 2023;
-    let postNr = "";
-    let selectedStatus = "";
+    let postNr = '';
+    let selectedStatus = '';
 
     let resultAmount;
-
     let cinema_list = [];
-
     let postCodeList = [];
-    let selectedPostNr;
-
     let statusList = [];
 
     async function searchTheater() {
         cinema_list = [];
-        console.log(postNr);
+        console.log(selectedStatus);
         const movie_search = {
             cinemaName: name,
             yearEnd: yearEnd,
             yearStart: yearStart,
             postnr: postNr,
             // @ts-ignore
-            status: selectedStatus.status_description,
+            status: selectedStatus
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
             method: "POST",
@@ -153,7 +149,7 @@
                     bind:value={selectedStatus}
                 >
                     {#each statusList as status}
-                        <option value={status}>
+                        <option value={status.status_description}>
                             {status.status_description}
                         </option>
                     {/each}

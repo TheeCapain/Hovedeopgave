@@ -28,9 +28,12 @@
             movieName: movieName,
             yearEnd: yearEnd,
             yearStart: yearStart,
-            country: selectedCountry.Country_name,
-            distributor: selectedDistributør.distributor_name,
-            rating: selectedRating.rating,
+            // @ts-ignore
+            country: selectedCountry,
+            // @ts-ignore
+            distributor: selectedDistributør,
+            // @ts-ignore
+            rating: selectedRating,
         };
         let response = await fetch(
             "http://localhost:8080/api/premieres/search",
@@ -144,7 +147,7 @@
                     bind:value={selectedCountry}
                 >
                     {#each countryList as country}
-                        <option value={country}>
+                        <option value={country.Country_name}>
                             {country.Country_name}
                         </option>
                     {/each}
@@ -160,7 +163,7 @@
                     bind:value={selectedDistributør}
                 >
                     {#each distributorList as distributor}
-                        <option value={distributor}>
+                        <option value={distributor.distributor_name}>
                             {distributor.distributor_name}
                         </option>
                     {/each}
@@ -176,7 +179,7 @@
                     bind:value={selectedRating}
                 >
                     {#each ratingList as rating}
-                        <option value={rating}>
+                        <option value={rating.rating}>
                             {rating.rating}
                         </option>
                     {/each}
