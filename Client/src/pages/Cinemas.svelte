@@ -26,6 +26,7 @@
             yearEnd: yearEnd,
             yearStart: yearStart,
             postnr: postNr,
+            // @ts-ignore
             status: selectedStatus.status_description,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {

@@ -5,27 +5,32 @@
     let movieName = "";
     let yearStart = 1900;
     let yearEnd = 2023;
-    let country = "";
-    let distributør = "";
-    let premiere_list = [];
+    let selectedCountry = "";
+    let selectedRating = "";
+    let selectedDistributør = "";
+    let premiereList = [];
+    let countryList = [];
+    let ratingList = [];
+    let distributorList = [];
     let resultAmount;
 
     onMount(async function getMovies() {
         let response = await fetch("http://localhost:8080/api/premieres").then(
             (response) => response.json()
         );
-        premiere_list = response.movies;
-        resultAmount = premiere_list.length;
+        premiereList = response.movies;
+        resultAmount = premiereList.length;
     });
 
     async function searchMovies() {
-        premiere_list = [];
+        premiereList = [];
         const movie_search = {
             movieName: movieName,
             yearEnd: yearEnd,
             yearStart: yearStart,
-            country: country,
-            distributor: distributør,
+            country: selectedCountry.Country_name,
+            distributor: selectedDistributør.distributor_name,
+            rating: selectedRating.rating,
         };
         let response = await fetch(
             "http://localhost:8080/api/premieres/search",
@@ -37,9 +42,30 @@
                 body: JSON.stringify(movie_search),
             }
         ).then((response) => response.json());
-        premiere_list = response.movies;
-        resultAmount = premiere_list.length;
+        premiereList = response.movies;
+        resultAmount = premiereList.length;
     }
+
+    onMount(async function getCountries() {
+        let response = await fetch("http://localhost:8080/api/country").then(
+            (response) => response.json()
+        );
+        countryList = response.countries;
+    });
+
+    onMount(async function getRating() {
+        let response = await fetch("http://localhost:8080/api/rating").then(
+            (response) => response.json()
+        );
+        ratingList = response.ratings;
+    });
+
+    onMount(async function getRating() {
+        let response = await fetch(
+            "http://localhost:8080/api/distributors"
+        ).then((response) => response.json());
+        distributorList = response.distributors;
+    });
 </script>
 
 <aside
@@ -111,40 +137,50 @@
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Land
                 </h3>
-                <input
-                    type="search"
-                    id="default-search"
+
+                <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Land"
-                    bind:value={country}
-                    required
-                />
+                    placeholder="Vælg status"
+                    bind:value={selectedCountry}
+                >
+                    {#each countryList as country}
+                        <option value={country}>
+                            {country.Country_name}
+                        </option>
+                    {/each}
+                </select>
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Distributør
                 </h3>
-                <input
-                    type="search"
-                    id="default-search"
+                <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Distributør"
-                    bind:value={distributør}
-                    required
-                />
+                    placeholder="Vælg status"
+                    bind:value={selectedDistributør}
+                >
+                    {#each distributorList as distributor}
+                        <option value={distributor}>
+                            {distributor.distributor_name}
+                        </option>
+                    {/each}
+                </select>
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Censur
                 </h3>
-                <input
-                    type="search"
-                    id="default-search"
+                <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Censur"
-                    bind:value={distributør}
-                    required
-                />
+                    placeholder="Vælg status"
+                    bind:value={selectedRating}
+                >
+                    {#each ratingList as rating}
+                        <option value={rating}>
+                            {rating.rating}
+                        </option>
+                    {/each}
+                </select>
             </li>
             <li>
                 <button
@@ -158,4 +194,4 @@
     </div>
 </aside>
 
-<PremiereTable {premiere_list} />
+<PremiereTable {premiereList} />

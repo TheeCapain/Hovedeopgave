@@ -53,7 +53,6 @@ biografRouter.post("/api/biograf/search", (req, res) => {
             res.send({ biografer: rows })
         })
 
-
     } catch (error) {
         console.log(error)
     }

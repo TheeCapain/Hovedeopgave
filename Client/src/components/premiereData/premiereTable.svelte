@@ -1,6 +1,6 @@
 <script>
     import PremiereData from "./premiereData.svelte";
-    export let premiere_list = [];
+    export let premiereList = [];
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            {#await premiere_list}
+            {#await premiereList}
                 <button
                     type="button"
                     class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
