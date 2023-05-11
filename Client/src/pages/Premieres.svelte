@@ -8,13 +8,14 @@
     let country = "";
     let distributør = "";
     let premiere_list = [];
+    let resultAmount;
 
     onMount(async function getMovies() {
         let response = await fetch("http://localhost:8080/api/premieres").then(
             (response) => response.json()
         );
         premiere_list = response.movies;
-        console.log(premiere_list)
+        resultAmount = premiere_list.length;
     });
 
     async function searchMovies() {
@@ -37,6 +38,7 @@
             }
         ).then((response) => response.json());
         premiere_list = response.movies;
+        resultAmount = premiere_list.length;
     }
 </script>
 
@@ -84,7 +86,10 @@
                 </form>
             </li>
             <li>
-                <span class="ml-3">Find film der havde premiere mellem</span>
+                <span class="ml-3">Viser:{resultAmount} resultater</span>
+            </li>
+            <li>
+                <span class="ml-3">Find film der havde mellem:</span>
                 <input
                     type="search"
                     id="default-search"

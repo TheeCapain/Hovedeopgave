@@ -32,7 +32,7 @@ biografRouter.post("/api/biograf/search", (req, res) => {
         }
 
         let cinemaname = req.body.cinemaName + '%'
-        let status = req.body.status + '%'
+        let status = req.body.status
         let postnr = req.body.postnr + '%'
         let yearStart = req.body.yearStart;
         let yearEnd = req.body.yearEnd;
@@ -47,7 +47,7 @@ biografRouter.post("/api/biograf/search", (req, res) => {
     AND YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) != ''
     AND YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) != ''
     AND address_postcode like (?)
-    AND status_description like (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status], (err, rows, fields) => {
+    AND status_description = (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status], (err, rows, fields) => {
 
             if (err) throw err
             res.send({ biografer: rows })

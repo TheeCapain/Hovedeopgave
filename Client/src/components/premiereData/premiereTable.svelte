@@ -12,6 +12,7 @@
                 <th scope="col" class="px-6 py-3">movieTitle</th>
                 <th scope="col" class="px-6 py-3">Originaltitle</th>
                 <th scope="col" class="px-6 py-3">distributer</th>
+                <th scope="col" class="px-6 py-3">country</th>
                 <th scope="col" class="px-6 py-3">year</th>
                 <th scope="col" class="px-6 py-3">Premierebiograf</th>
                 <th scope="col" class="px-6 py-3">Censur</th>
@@ -36,6 +37,7 @@
                         movieTitle={movie.movie_title}
                         Originaltitle={movie.original_title}
                         distributer={movie.distributor_name}
+                        country={movie.Country_name}
                         year={movie.premiere_year}
                         Premierebiograf={movie.Premiere_period}
                         Censur={movie.rating}

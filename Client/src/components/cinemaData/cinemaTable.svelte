@@ -1,8 +1,6 @@
 <script>
     import CinemaData from "./cinemaData.svelte";
-    import { onMount } from "svelte";
     export let cinema_list = [];
-    export let listlength;
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -18,7 +16,6 @@
                 <th scope="col" class="px-6 py-3">Åbnet</th>
                 <th scope="col" class="px-6 py-3">Lukket</th>
                 <th scope="col" class="px-6 py-3">Status</th>
-                <h1>viser {listlength} resultater</h1>
             </tr>
         </thead>
         <tbody>
@@ -32,22 +29,10 @@
                         class="animate-spin h-5 w-5 mr-3 ..."
                         viewBox="0 0 24 24"
                     />
-                    Ingen resultater
+                    Indlæser biografer...
                 </button>
             {:else}
-                {#await cinema_list}
-                    <button
-                        type="button"
-                        class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        disabled
-                    >
-                        <svg
-                            class="animate-spin h-5 w-5 mr-3 ..."
-                            viewBox="0 0 24 24"
-                        />
-                        Indlæser biografer...
-                    </button>
-                {:then cinema_list}
+                {#await cinema_list then cinema_list}
                     {#each cinema_list as cinema}
                         <CinemaData
                             cinemaName={cinema.cinema_name}
@@ -59,19 +44,6 @@
                             cinemaBy={cinema.address_city}
                         />
                     {/each}
-                    {#if cinema_list.length == 0}
-                        <button
-                            type="button"
-                            class="w-full text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            disabled
-                        >
-                            <svg
-                                class="animate-spin h-5 w-5 mr-3 ..."
-                                viewBox="0 0 24 24"
-                            />
-                            Ingen resultater
-                        </button>
-                    {/if}
                 {/await}
             {/if}
         </tbody>

@@ -22,7 +22,8 @@ movieRouter.post("/api/premieres/search", (req, res) => {
     inner join countries c on premieres.fk_country = c.country_id
     inner join censorships c2 on premieres.fk_censorship = c2.censorship_id
     inner join distributors d on premieres.fk_distributør = d.distributor_id
-    where movie_title like ? or original_title like ?`, [movieName, movieName], (err, rows, fields) => {
+    where movie_title like ? or original_title like ?
+    `, [movieName, movieName], (err, rows, fields) => {
         if (err) throw err
         res.send({ movies: rows })
     })

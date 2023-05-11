@@ -7,21 +7,26 @@
     let yearStart = 1900;
     let yearEnd = 2023;
     let postNr = "";
-    let status = "";
+    let selectedStatus = "";
 
-    let listlength;
+    let resultAmount;
 
     let cinema_list = [];
+
     let postCodeList = [];
+    let selectedPostNr;
+
+    let statusList = [];
 
     async function searchTheater() {
         cinema_list = [];
+        console.log(postNr);
         const movie_search = {
             cinemaName: name,
             yearEnd: yearEnd,
             yearStart: yearStart,
             postnr: postNr,
-            status: status
+            status: selectedStatus.status_description,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
             method: "POST",
@@ -31,8 +36,7 @@
             body: JSON.stringify(movie_search),
         }).then((response) => response.json());
         cinema_list = response.biografer;
-        listlength = cinema_list.length;
-        console.log(cinema_list)
+        resultAmount = cinema_list.length;
     }
 
     onMount(async function getBiografer() {
@@ -40,7 +44,7 @@
             (response) => response.json()
         );
         cinema_list = response.biografer;
-        listlength = cinema_list.length;
+        resultAmount = cinema_list.length;
     });
 
     onMount(async function biograpostnr() {
@@ -54,6 +58,7 @@
         let response = await fetch("http://localhost:8080/api/status").then(
             (response) => response.json()
         );
+        statusList = response.status;
     });
 </script>
 
@@ -99,6 +104,9 @@
                         />
                     </div>
                 </form>
+            </li>
+            <li>
+                <span class="ml-3">Viser: {resultAmount} resultater</span>
             </li>
             <li>
                 <span class="ml-3">Biografer aktive mellem:</span>
@@ -154,32 +162,24 @@
                 <div
                     id="dropdownBgHover"
                     class="z-10 h-72 hidden overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                >
-                    <ul
-                        class="p-3 w-full space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownBgHoverButton"
-                    >
-                        {#each postCodeList as code}
-                            <Checkbox
-                                name={code.address_postcode}
-                                description={code.address_city}
-                            />
-                        {/each}
-                    </ul>
-                </div>
+                />
             </li>
             <li>
                 <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                     Status
                 </h3>
-                <input
-                    type="search"
-                    id="default-search"
+
+                <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Status"
-                    bind:value={status}
-                    required
-                />
+                    placeholder="Vælg status"
+                    bind:value={selectedStatus}
+                >
+                    {#each statusList as status}
+                        <option value={status}>
+                            {status.status_description}
+                        </option>
+                    {/each}
+                </select>
             </li>
             <li>
                 <button
@@ -193,4 +193,12 @@
     </div>
 </aside>
 
-<CinemaTable {cinema_list} {listlength} />
+<CinemaTable {cinema_list} />
+
+<style>
+    input {
+        display: block;
+        width: 500px;
+        max-width: 100%;
+    }
+</style>
