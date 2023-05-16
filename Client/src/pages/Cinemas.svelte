@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
-    import Checkbox from "../components/checkbox.svelte";
+
 
     let name = '';
     let yearStart = 1900;
@@ -63,7 +63,7 @@
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div class="h-flex px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
                 <form>

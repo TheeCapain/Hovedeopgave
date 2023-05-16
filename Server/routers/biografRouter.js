@@ -16,6 +16,15 @@ biografRouter.get("/api/biograf", (req, res) => {
     })
 })
 
+biografRouter.post("/api/biograf", (req, res) => {
+    console.log("In biograf create")
+})
+
+biografRouter.put("/api/biograf", (req, res) => {
+    console.log("in biograf put")
+})
+
+
 biografRouter.post("/api/biograf/search", (req, res) => {
     try {
 
@@ -63,6 +72,10 @@ biografRouter.post("/api/biograf/year", (req, res) => {
             if (err) throw err
             res.send({ biografer: rows })
         })
+})
+
+biografRouter.delete("/api/biograf",(req,res)=>{
+    
 })
 
 export default biografRouter

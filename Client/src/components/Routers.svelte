@@ -1,25 +1,33 @@
 <script>
     import { Router, Route, Link } from "svelte-navigator";
-    import Sidebar from "../assets/sidebar.svelte";
     import Admin from "../pages/Admin.svelte";
+    import AdminCreate from "./Admin/adminCreate.svelte";
+    import AdminUpdate from "./Admin/adminUpdate.svelte";
     import Cinemas from "../pages/Cinemas.svelte";
     import Premieres from "../pages/Premieres.svelte";
-    import { onMount } from "svelte";
+    import Login from "../pages/Login.svelte";
 </script>
 
 <Router>
+    <Route path="login">
+        <Login />
+    </Route>
     <Route path="admin">
         <Admin />
     </Route>
     <Route path="cinemas">
         <Cinemas />
-
+    </Route>
+    <Route path="newCinema">
+        <AdminCreate />
+    </Route>
+    <Route path="update">
+        <AdminUpdate />
     </Route>
     <Route path="premieres">
         <Premieres />
     </Route>
 </Router>
-<Sidebar />
 
 <aside
     id="default-sidebar"
@@ -29,7 +37,7 @@
     <div class="px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <Router>
-                <Link to="/admin">
+                <Link to="/login">
                     <li>
                         <a
                             href="/"
