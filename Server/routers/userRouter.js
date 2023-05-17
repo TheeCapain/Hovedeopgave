@@ -13,20 +13,21 @@ userRouter.get("/api/users", (req, res) => {
 })
 
 userRouter.post("/api/login", async (req, res) => {
-    const [user,_] = db.execute('SELECT * from users where user_name = ?;', [req.body.username])
-    console.log(user)
 
-    if (user) {
-        if (await comparePassword(req.body.password, user.user_password))
-            res.send({ message: "All is good" })
-    }
+    db.query('SELECT * from users where user_name = (?);', [req.body.username], (err, rows, fields) => {
+        if (rows[0].user_password) {
+            if (comparePassword(req.body.password, rows[0].user_password))
+                console.log("Compared is true")
+            res.status(200).send({ user: rows[0] })
+        } else {
+            res.status(400).send({ user: "Wrong info" })
+        }
+        if (err) throw err
+    })
 })
 
 userRouter.post("/api/users", async (req, res) => {
-
     let test = await hashPassword(req.body.password)
-
-
     db.query('INSERT INTO users(user_name, user_password) VALUES (?,?);', [req.body.userName, test], (err, rows, fields) => {
         if (err) throw err
         res.send({ status: rows })

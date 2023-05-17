@@ -1,29 +1,35 @@
 <script>
     import { Router, Route, Link } from "svelte-navigator";
+    import { user } from "../assets/stores";
     import Admin from "../pages/Admin.svelte";
     import AdminCreate from "./Admin/adminCreate.svelte";
     import AdminUpdate from "./Admin/adminUpdate.svelte";
     import Cinemas from "../pages/Cinemas.svelte";
     import Premieres from "../pages/Premieres.svelte";
     import Login from "../pages/Login.svelte";
+    import PrivateRoute from "./privateRoutes/PrivateRoute.svelte";
 </script>
 
 <Router>
     <Route path="login">
-        <Login />
+        {#if !$user}
+            <Login />
+        {:else}
+            <Admin />
+        {/if}
     </Route>
-    <Route path="admin">
+    <PrivateRoute path="admin">
         <Admin />
-    </Route>
+    </PrivateRoute>
     <Route path="cinemas">
         <Cinemas />
     </Route>
-    <Route path="newCinema">
+    <PrivateRoute path="newCinema">
         <AdminCreate />
-    </Route>
-    <Route path="update">
+    </PrivateRoute>
+    <PrivateRoute path="update">
         <AdminUpdate />
-    </Route>
+    </PrivateRoute>
     <Route path="premieres">
         <Premieres />
     </Route>
@@ -34,7 +40,7 @@
     class="fixed top-0 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div class="px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <Router>
                 <Link to="/login">
