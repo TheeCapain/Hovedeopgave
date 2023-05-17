@@ -2,12 +2,11 @@
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
 
-
-    let name = '';
+    let name = "";
     let yearStart = 1900;
     let yearEnd = 2023;
-    let postNr = '';
-    let selectedStatus = '';
+    let postNr = "";
+    let selectedStatus = "";
 
     let resultAmount;
     let cinema_list = [];
@@ -23,7 +22,7 @@
             yearStart: yearStart,
             postnr: postNr,
             // @ts-ignore
-            status: selectedStatus
+            status: selectedStatus,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
             method: "POST",
@@ -63,7 +62,9 @@
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div
+        class="h-screen px-3 py-4 overflow-y-auto bg-gray-700 dark:bg-gray-800"
+    >
         <ul class="space-y-2 font-medium">
             <li>
                 <form>
@@ -94,7 +95,7 @@
                         <input
                             type="search"
                             id="default-search"
-                            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="text-slate-100 dark:hover:bg-text-700 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Bio navn"
                             bind:value={name}
                             required
@@ -102,11 +103,22 @@
                     </div>
                 </form>
             </li>
+            {#if resultAmount != undefined}
+                <li>
+                    <span class="ml-3"
+                        ><p class="text-slate-100 dark:hover:bg-text-700">
+                            Viser: {resultAmount} resultater
+                        </p></span
+                    >
+                </li>
+            {/if}
+
             <li>
-                <span class="ml-3">Viser: {resultAmount} resultater</span>
-            </li>
-            <li>
-                <span class="ml-3">Biografer aktive mellem:</span>
+                <span class="ml-3">
+                    <p class="text-slate-100 dark:hover:bg-text-700">
+                        Biografer aktive mellem:
+                    </p></span
+                >
                 <input
                     type="search"
                     id="default-search"
@@ -125,7 +137,7 @@
                 />
             </li>
             <li>
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-slate-100 dark:hover:bg-text-700">
                     Postnummer
                 </h3>
                 <input
@@ -136,12 +148,9 @@
                     bind:value={postNr}
                     required
                 />
-                
             </li>
             <li>
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
-                    Status
-                </h3>
+                <h3 class="text-slate-100 dark:hover:bg-text-700">Status</h3>
 
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -75,7 +75,9 @@
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div
+        class="h-screen px-3 py-4 overflow-y-auto bg-gray-700 dark:bg-gray-800"
+    >
         <ul class="space-y-2 font-medium">
             <li>
                 <form>
@@ -114,21 +116,35 @@
                     </div>
                 </form>
             </li>
+            {#if resultAmount != undefined}
+                <li>
+                    <span class="ml-3"
+                        ><p class="text-slate-100 dark:hover:bg-text-700">
+                            Viser: {resultAmount} resultater
+                        </p></span
+                    >
+                </li>
+            {/if}
             <li>
-                <span class="ml-3">Viser:{resultAmount} resultater</span>
-            </li>
-            <li>
-                <span class="ml-3">Biograf navn</span>
+                <span class="ml-3"
+                    ><p class="text-slate-100 dark:hover:bg-text-700">
+                        Film navn
+                    </p></span
+                >
                 <input
                     type="search"
                     id="default-search"
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Biograf navn"
+                    placeholder="Film navn"
                     required
                 />
             </li>
             <li>
-                <span class="ml-3">Find film der havde mellem:</span>
+                <span class="ml-3"
+                    ><p class="text-slate-100 dark:hover:bg-text-700">
+                        Find film der havde mellem:
+                    </p></span
+                >
                 <input
                     type="search"
                     id="default-search"
@@ -147,7 +163,7 @@
                 />
             </li>
             <li>
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-slate-100 dark:hover:bg-text-700">
                     Land
                 </h3>
 
@@ -164,7 +180,7 @@
                 </select>
             </li>
             <li>
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-slate-100 dark:hover:bg-text-700">
                     Distributør
                 </h3>
                 <select
@@ -180,7 +196,7 @@
                 </select>
             </li>
             <li>
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-slate-100 dark:hover:bg-text-700">
                     Censur
                 </h3>
                 <select
