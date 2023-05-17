@@ -17,7 +17,11 @@ biografRouter.get("/api/biograf", (req, res) => {
 })
 
 biografRouter.post("/api/biograf", (req, res) => {
-    console.log("In biograf create")
+    db.query('INSERT INTO cinemas(cinema_name, cinema_opened,cinema_closed) VALUES (?,?,=);', [req.body.cinemaName, req.body.cinemaOpened, req.body.cinemaClosed], (err, rows, fields) => {
+        if (err) throw err
+        res.send({ status: rows })
+    })
+
 })
 
 biografRouter.put("/api/biograf", (req, res) => {
@@ -38,7 +42,7 @@ biografRouter.post("/api/biograf/search", (req, res) => {
         }
         if (req.body.yearEnd === '') {
             req.body.yearEnd = '2023'
-        } Panoptiko
+        } 
 
         let cinemaname = '%' + req.body.cinemaName + '%'
         let status = req.body.status + '%'
@@ -75,7 +79,7 @@ biografRouter.post("/api/biograf/year", (req, res) => {
 })
 
 biografRouter.delete("/api/biograf",(req,res)=>{
-    
+    console.log("Deleted")
 })
 
 export default biografRouter
