@@ -6,6 +6,16 @@
     let selectedCinema;
     let cinemaId;
     let cinemaSearched = [];
+    let cinema_name;
+    let alt_name;
+    let status_id;
+
+    let statusList = [];
+    let addressList = [];
+    let selectedStatus;
+    let selectedaddress;
+    let opened;
+    let closed;
 
     async function searchTheater() {
         const movie_search = {
@@ -86,4 +96,115 @@
         class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         on:click={searchTheater}>Search</button
     >
+    <form>
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label
+                    for="first_name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Biograf Navn</label
+                >
+                <input
+                    type="text"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Biograf navn"
+                    bind:value={cinema_name}
+                    required
+                />
+            </div>
+            <div>
+                <label
+                    for="last_name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Alternative navne</label
+                >
+                <input
+                    type="text"
+                    id="last_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Alternative"
+                />
+            </div>
+            <div>
+                <h3
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                    Status
+                </h3>
+
+                <select
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Vælg status"
+                    bind:value={selectedStatus}
+                >
+                    {#each statusList as status}
+                        <option value={status.status_id}>
+                            {status.status_description}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <div>
+                <h3
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                    Adresse
+                </h3>
+
+                <select
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Vælg status"
+                    bind:value={selectedaddress}
+                >
+                    {#each addressList as address}
+                        <option value={address.address_id}>
+                            {address.address_road +
+                                ", " +
+                                address.address_postcode +
+                                ", " +
+                                address.address_city}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <div>
+                <label for="start">Start date:</label>
+
+                <input
+                    type="date"
+                    id="start"
+                    name="trip-start"
+                    bind:value={opened}
+                    min="1900-01-01"
+                />
+                <input
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={opened}
+                    bind:value={opened}
+                />
+            </div>
+            <div>
+                <label for="start">Lukke dato:</label>
+
+                <input
+                    type="date"
+                    id="start"
+                    name="trip-start"
+                    bind:value={closed}
+                    min="1900-01-01"
+                />
+                <input
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={closed}
+                    bind:value={closed}
+                />
+            </div>
+        </div>
+        <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >Submit</button
+        >
+    </form>
 </div>
