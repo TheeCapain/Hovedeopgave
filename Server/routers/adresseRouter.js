@@ -11,6 +11,13 @@ adresseRouter.get("/api/adresse/postnr", (req, res) => {
     })
 })
 
+adresseRouter.get("/api/addresses", (req, res) => {
+    db.query('SELECT DISTINCT * from addresses ORDER BY address_postcode;', (err, rows, fields) => {
+        if (err) throw err
+        res.send({ addresses: rows })
+    })
+})
+
 adresseRouter.get("/api/adresse/postnr/range", (req, res) => {
     console.log(req.body.liste)
     //FOR LOOP IGENNEM LISTE SENDT FRA FRONTEND?
@@ -19,5 +26,6 @@ adresseRouter.get("/api/adresse/postnr/range", (req, res) => {
         res.send({ postnr: rows })
     })
 })
+
 
 export default adresseRouter

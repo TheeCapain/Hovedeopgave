@@ -16,7 +16,11 @@ userRouter.post("/api/login", async (req, res) => {
 
     db.query('SELECT * from users where user_name = (?);', [req.body.username], (err, rows, fields) => {
         if (rows[0].user_password) {
-            if (comparePassword(req.body.password, rows[0].user_password))
+            console.log(rows[0].user_password)
+            let userpassword = rows[0].user_password
+            console.log(userpassword)
+
+            if (comparePassword("123", String(userpassword)))
                 console.log("Compared is true")
             res.status(200).send({ user: rows[0] })
         } else {
