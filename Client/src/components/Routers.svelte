@@ -40,14 +40,16 @@
     class="fixed top-0 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div
+        class="h-full px-3 py-4 overflow-y-auto bg-slate-700 dark:bg-gray-800"
+    >
         <ul class="space-y-2 font-medium">
             <Router>
                 <Link to="/login">
                     <li>
                         <a
                             href="/"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                            class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +57,7 @@
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="w-6 h-6"
+                                class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -64,7 +66,13 @@
                                 />
                             </svg>
 
-                            <span class="ml-3">Admin</span>
+                            <span class="ml-3"
+                                ><h1
+                                    class="text-slate-100 dark:hover:bg-text-700"
+                                >
+                                    Admin
+                                </h1></span
+                            >
                         </a>
                     </li>
                 </Link>
@@ -72,7 +80,7 @@
                     <li>
                         <a
                             href="/"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                            class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700"
                         >
                             <svg
                                 aria-hidden="true"
@@ -87,7 +95,11 @@
                                 /></svg
                             >
 
-                            <span class="ml-3">Biograf Database</span>
+                            <span class="ml-3"
+                                ><h1 class="text-slate-100">
+                                    Biograf Database
+                                </h1></span
+                            >
                         </a>
                     </li>
                 </Link>
@@ -95,7 +107,7 @@
                     <li>
                         <a
                             href="/"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                            class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700"
                         >
                             <svg
                                 aria-hidden="true"
@@ -110,7 +122,13 @@
                                 /></svg
                             >
 
-                            <span class="ml-3">Filmpremiere Database</span>
+                            <span class="ml-3"
+                                ><h1
+                                    class="text-slate-100 dark:hover:bg-text-700"
+                                >
+                                    Filmpremiere Database
+                                </h1></span
+                            >
                         </a>
                     </li>
                 </Link>

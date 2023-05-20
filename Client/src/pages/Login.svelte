@@ -33,7 +33,7 @@
     }
 </script>
 
-<div class="ml-64 overflow-x-auto">
+<div class="ml-72 overflow-x-auto">
     <h1>Admin</h1>
     <form >
         <input
