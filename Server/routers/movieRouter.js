@@ -21,22 +21,18 @@ movieRouter.post("/api/premieres/search", (req, res) => {
     let rating = req.body.rating;
 
     if (country === '') {
-        country = country + '%'
+        country = '%' + country + '%'
     }
 
     if (distributor === '') {
-        distributor = distributor + '%'
+        distributor = '%' + distributor + '%'
     }
 
     if (rating === '') {
-        rating = rating + '%'
+        rating = '%' + rating + '%'
     }
 
-    console.log(distributor)
-
-
-
-    let movieName = req.body.movieName + '%'
+    let movieName = '%' + req.body.movieName + '%'
 
 
     db.query(`SELECT * from premieres

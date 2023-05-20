@@ -128,20 +128,6 @@
             <li>
                 <span class="ml-3"
                     ><p class="text-slate-100 dark:hover:bg-text-700">
-                        Film navn
-                    </p></span
-                >
-                <input
-                    type="search"
-                    id="default-search"
-                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Film navn"
-                    required
-                />
-            </li>
-            <li>
-                <span class="ml-3"
-                    ><p class="text-slate-100 dark:hover:bg-text-700">
                         Find film der havde mellem:
                     </p></span
                 >
@@ -163,9 +149,7 @@
                 />
             </li>
             <li>
-                <h3 class="text-slate-100 dark:hover:bg-text-700">
-                    Land
-                </h3>
+                <h3 class="text-slate-100 dark:hover:bg-text-700">Land</h3>
 
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -196,9 +180,7 @@
                 </select>
             </li>
             <li>
-                <h3 class="text-slate-100 dark:hover:bg-text-700">
-                    Censur
-                </h3>
+                <h3 class="text-slate-100 dark:hover:bg-text-700">Censur</h3>
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Vælg status"
