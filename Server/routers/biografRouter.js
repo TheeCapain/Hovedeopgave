@@ -4,13 +4,13 @@ import db from '../database/connection.js';
 const biografRouter = new Router();
 
 biografRouter.get("/api/biograf", (req, res) => {
-    db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description 
+    db.query(`SELECT cinema_id,cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
     FROM biorama.cinemas 
     INNER JOIN biorama.addresses 
     ON address_id = fk_address_id 
     INNER JOIN biorama.status 
     ON status_id = fk_status_id
-    ORDER BY fk_address_id;`, (err, rows, fields) => {
+    ORDER BY cinema_name;;`, (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
     })
@@ -37,12 +37,10 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 biografRouter.post("/api/biograf", (req, res) => {
     console.log(req.body)
 
-    /*db.query('INSERT INTO cinemas(cinema_name,cinema_ cinema_opened,cinema_closed) VALUES (?,?,=);', [req.body.cinemaName, req.body.cinemaOpened, req.body.cinemaClosed], (err, rows, fields) => {
+    db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);', [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed,req.body.statusId, req.body.addressId], (err, rows, fields) => {
         if (err) throw err
         res.send({ status: rows })
     })
-    */
-
 })
 
 biografRouter.put("/api/biograf", (req, res) => {
