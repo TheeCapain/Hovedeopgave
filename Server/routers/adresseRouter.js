@@ -27,5 +27,15 @@ adresseRouter.get("/api/adresse/postnr/range", (req, res) => {
     })
 })
 
+adresseRouter.post("/api/address", (req, res) => {
+    console.log(req.body)
+    db.query(`insert into addresses(address_road, address_city, address_postcode)
+    values(?, ?, ?)`, [req.body.roadName, req.body.cityName, req.body.postCode], (err, rows, fields) => {
+        if (err) throw err
+        res.send({ message: "Success" })
+    })
+})
+
+
 
 export default adresseRouter

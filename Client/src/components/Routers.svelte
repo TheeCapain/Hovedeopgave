@@ -8,6 +8,7 @@
     import Premieres from "../pages/Premieres.svelte";
     import Login from "../pages/Login.svelte";
     import PrivateRoute from "./privateRoutes/PrivateRoute.svelte";
+    import AddressCreate from "./Admin/addressCreate.svelte";
 </script>
 
 <Router>
@@ -29,6 +30,9 @@
     </PrivateRoute>
     <PrivateRoute path="update">
         <AdminUpdate />
+    </PrivateRoute>
+    <PrivateRoute path="newAddress">
+        <AddressCreate/>
     </PrivateRoute>
     <Route path="premieres">
         <Premieres />

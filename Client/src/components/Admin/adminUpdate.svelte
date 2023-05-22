@@ -70,6 +70,15 @@
                 </h1>
             </Link>
         </li>
+        <li class="mr-2">
+            <Link to="/newAddress">
+                <h1
+                    class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                >
+                    ny addresse
+                </h1>
+            </Link>
+        </li>
     </ul>
 
     <div>

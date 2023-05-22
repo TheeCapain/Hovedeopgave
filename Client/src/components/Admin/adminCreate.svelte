@@ -20,6 +20,9 @@
             cinemaAlt: alt_name,
             statusId: selectedStatus,
             addressId: selectedaddress,
+            opened: opened,
+            closed: closed
+
         };
         let response = await fetch("http://localhost:8080/api/biograf", {
             method: "POST",
@@ -76,6 +79,15 @@
                 </h1>
             </Link>
         </li>
+        <li class="mr-2">
+            <Link to="/newAddress">
+                <h1
+                    class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                >
+                    ny addresse
+                </h1>
+            </Link>
+        </li>
     </ul>
 
     <form>
@@ -106,6 +118,7 @@
                     id="last_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Alternative"
+                    bind:value={alt_name}
                 />
             </div>
             <div>

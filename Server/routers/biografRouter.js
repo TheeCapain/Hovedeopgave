@@ -36,6 +36,7 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 
 biografRouter.post("/api/biograf", (req, res) => {
     console.log(req.body)
+
     /*db.query('INSERT INTO cinemas(cinema_name,cinema_ cinema_opened,cinema_closed) VALUES (?,?,=);', [req.body.cinemaName, req.body.cinemaOpened, req.body.cinemaClosed], (err, rows, fields) => {
         if (err) throw err
         res.send({ status: rows })
