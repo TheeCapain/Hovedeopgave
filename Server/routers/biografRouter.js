@@ -3,6 +3,14 @@ import db from '../database/connection.js';
 
 const biografRouter = new Router();
 
+biografRouter.get("/test", (req, res) => {
+    db.query(`SELECT * from status;`, (err, rows, fields) => {
+        if (err) throw err
+        res.send({ biografer: rows })
+    })
+})
+
+
 biografRouter.get("/api/biograf", (req, res) => {
     db.query(`SELECT cinema_id,cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
     FROM biorama.cinemas 

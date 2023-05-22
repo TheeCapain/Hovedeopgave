@@ -3,12 +3,11 @@
     import { onMount } from "svelte";
 
     let cinemaList = [];
-    let selectedCinema;
+    let selectedCinema = [];
     let cinemaId;
     let cinemaSearched = [];
     let cinema_name;
-    let alt_name;
-    let status_id;
+    console.log(selectedCinema);
 
     let statusList = [];
     let addressList = [];
@@ -18,24 +17,28 @@
     let closed;
 
     async function searchTheater() {
-        const movie_search = {
-            cinemaId: selectedCinema,
-        };
-        let response = await fetch("http://localhost:8080/api/biograf/id", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(movie_search),
-        }).then((response) => response.json());
-        cinemaSearched = response.biografer;
+        console.log(selectedCinema);
     }
 
-    onMount(async function biografStatus() {
+    onMount(async function biograf() {
         let response = await fetch("http://localhost:8080/api/biograf").then(
             (response) => response.json()
         );
         cinemaList = response.biografer;
+    });
+
+    onMount(async function status() {
+        let response = await fetch("http://localhost:8080/api/status").then(
+            (response) => response.json()
+        );
+        statusList = response.status;
+    });
+
+    onMount(async function adresses() {
+        let response = await fetch("http://localhost:8080/api/addresses").then(
+            (response) => response.json()
+        );
+        addressList = response.addresses;
     });
 </script>
 
@@ -85,26 +88,21 @@
         <h3
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-            Søg biograf
+            Find biograf
         </h3>
 
         <select
             class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Vælg status"
+            placeholder="Vælg biograf"
             bind:value={selectedCinema}
         >
             {#each cinemaList as cinema}
-                <option value={cinema.cinema_id}>
+                <option value={cinema}>
                     {cinema.cinema_name}
                 </option>
             {/each}
         </select>
     </div>
-    <button
-        type="button"
-        class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        on:click={searchTheater}>Search</button
-    >
     <form>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
@@ -118,7 +116,7 @@
                     id="first_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Biograf navn"
-                    bind:value={cinema_name}
+                    bind:value={selectedCinema.cinema_name}
                     required
                 />
             </div>
@@ -133,6 +131,7 @@
                     id="last_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Alternative"
+                    bind:value={selectedCinema.cinema_alt_names}
                 />
             </div>
             <div>
@@ -141,7 +140,6 @@
                 >
                     Status
                 </h3>
-
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Vælg status"
@@ -163,11 +161,11 @@
 
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Vælg status"
-                    bind:value={selectedaddress}
+                    placeholder="Vælg addresse"
+                    bind:value={selectedCinema.cinema_opened}
                 >
                     {#each addressList as address}
-                        <option value={address.address_id}>
+                        <option value={selectedCinema.address_id}>
                             {address.address_road +
                                 ", " +
                                 address.address_postcode +
@@ -190,7 +188,7 @@
                 <input
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={opened}
-                    bind:value={opened}
+                    bind:value={selectedCinema.cinema_opened}
                 />
             </div>
             <div>
@@ -206,14 +204,14 @@
                 <input
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={closed}
-                    bind:value={closed}
+                    bind:value={selectedCinema.cinema_closed}
                 />
             </div>
         </div>
         <button
             type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Submit</button
+            on:click={searchTheater}>Submit</button
         >
     </form>
 </div>

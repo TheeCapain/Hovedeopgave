@@ -34,10 +34,11 @@
     }
 
     onMount(async function biografStatus() {
-        let response = await fetch("http://localhost:8080/api/biografer").then(
+        let response = await fetch("http://localhost:8080/api/statusId").then(
             (response) => response.json()
         );
         statusList = response.status;
+        console.log(statusList)
     });
 
     onMount(async function adresses() {
@@ -149,7 +150,7 @@
 
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Vælg status"
+               
                     bind:value={selectedaddress}
                 >
                     {#each addressList as address}
