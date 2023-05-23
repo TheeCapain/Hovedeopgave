@@ -23,8 +23,6 @@ biografRouter.get("/api/biograf", (req, res) => {
     })
 })
 
-
-
 biografRouter.post("/api/biograf/id", (req, res) => {
     console.log("test")
     console.log(req.body)
@@ -44,24 +42,37 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 biografRouter.post("/api/biograf", (req, res) => {
     console.log(req.body)
 
-    db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);', [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
-        if (err) {
-            res.status(400).send({
-                message: "Could not create cinema"
-            })
-        }
-        res.send({ status: rows })
-    })
+    db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);',
+        [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
+            if (err) {
+                console.log("Error" + err)
+                res.status(400).send({
+                    message: "Could not create cinema"
+                })
+            } else {
+
+                res.send({ status: rows })
+
+            }
+        })
 })
 
 biografRouter.put("/api/biograf/update", (req, res) => {
     console.log(req.body)
+    db.query(`UPDATE cinemas
+    set cinema_name = ?, cinema_alt_names= ?, fk_status_id= ?, fk_address_id= ?, cinema_opened = ?, cinema_closed = ?
+    where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => {
+            if (err) {
+                console.log("Error" + err)
+                res.status(400).send({
+                    message: "Could not create cinema"
+                })
+            } else {
 
+                res.send({ status: rows })
 
-
-    res.send({
-        message: "Updated"
-    })
+            }
+        }
 })
 
 
