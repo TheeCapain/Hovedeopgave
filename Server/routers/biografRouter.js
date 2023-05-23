@@ -1,15 +1,14 @@
 import { Router } from "express";
-import db from '../database/connection.js';
+import db from '../connection.js';
 
 const biografRouter = new Router();
 
-biografRouter.get("/test", (req, res) => {
-    db.query(`SELECT * from status;`, (err, rows, fields) => {
+biografRouter.get("/api/test", (req, res) => {
+    db.query(`Select * from status`, (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
     })
 })
-
 
 biografRouter.get("/api/biograf", (req, res) => {
     db.query(`SELECT cinema_id,cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
@@ -30,10 +29,10 @@ biografRouter.post("/api/biograf/id", (req, res) => {
     console.log("test")
     console.log(req.body)
     db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description 
-    FROM biorama.cinemas 
-    INNER JOIN biorama.addresses 
+    FROM cinemas 
+    INNER JOIN addresses 
     ON address_id = fk_address_id 
-    INNER JOIN biorama.status 
+    INNER JOIN status 
     ON status_id = fk_status_id
     where cinema_id = ?
     ORDER BY fk_address_id;`, [req.body.cinemaId], (err, rows, fields) => {
