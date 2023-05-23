@@ -4,10 +4,11 @@
 
     let cinemaList = [];
     let selectedCinema = [];
+    let newName;
+    let newAlt;
     let cinemaId;
     let cinemaSearched = [];
     let cinema_name;
-    console.log(selectedCinema);
 
     let statusList = [];
     let addressList = [];
@@ -16,8 +17,25 @@
     let opened;
     let closed;
 
-    async function searchTheater() {
+    async function updateCinema() {
         console.log(selectedCinema);
+        console.log(selectedaddress);
+        const cinemaupdates = {
+            cinemaId: selectedCinema.cinema_id,
+            cinemaName: selectedCinema.cinema_name,
+            cinemaAlt: selectedCinema.cinema_alt_names,
+            cinemaStatus: selectedCinema.status_id,
+            cinemaAddress: selectedCinema.address_id,
+            cinemaOpened: selectedCinema.cinema_opened,
+            cinemaClosed: selectedCinema.cinema_closed
+        };
+        let response = await fetch("http://localhost:8080/api/biograf/update", {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(cinemaupdates),
+        }).then((response) => response.json());
     }
 
     onMount(async function biograf() {
@@ -28,10 +46,11 @@
     });
 
     onMount(async function status() {
-        let response = await fetch("http://localhost:8080/api/status").then(
+        let response = await fetch("http://localhost:8080/api/statusId").then(
             (response) => response.json()
         );
         statusList = response.status;
+        console.log(statusList);
     });
 
     onMount(async function adresses() {
@@ -143,7 +162,7 @@
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Vælg status"
-                    bind:value={selectedStatus}
+                    bind:value={selectedCinema.status_id}
                 >
                     {#each statusList as status}
                         <option value={status.status_id}>
@@ -162,10 +181,10 @@
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Vælg addresse"
-                    bind:value={selectedCinema.cinema_opened}
+                    bind:value={selectedaddress}
                 >
                     {#each addressList as address}
-                        <option value={selectedCinema.address_id}>
+                        <option value={address.address_id}>
                             {address.address_road +
                                 ", " +
                                 address.address_postcode +
@@ -211,7 +230,7 @@
         <button
             type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            on:click={searchTheater}>Submit</button
+            on:click={updateCinema}>Submit</button
         >
     </form>
 </div>

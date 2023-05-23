@@ -44,14 +44,24 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 biografRouter.post("/api/biograf", (req, res) => {
     console.log(req.body)
 
-    db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);', [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed,req.body.statusId, req.body.addressId], (err, rows, fields) => {
-        if (err) throw err
+    db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);', [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
+        if (err) {
+            res.status(400).send({
+                message: "Could not create cinema"
+            })
+        }
         res.send({ status: rows })
     })
 })
 
-biografRouter.put("/api/biograf", (req, res) => {
-    console.log("in biograf put")
+biografRouter.put("/api/biograf/update", (req, res) => {
+    console.log(req.body)
+
+
+
+    res.send({
+        message: "Updated"
+    })
 })
 
 
