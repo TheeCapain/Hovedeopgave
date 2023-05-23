@@ -1,5 +1,5 @@
 import { Router } from "express";
-import db from '../database/connection.js';
+import db from '../connection.js';
 import { comparePassword, hashPassword } from "../middleware/auth.js";
 
 
