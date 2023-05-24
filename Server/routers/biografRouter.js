@@ -105,7 +105,7 @@ biografRouter.post("/api/biograf/search", (req, res) => {
     AND (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
     AND (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between (?) and (?) or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) > (?))
     AND address_postcode like (?)
-    AND status_description like (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status], (err, rows, fields) => {
+    AND status_description like (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {
 
             if (err) throw err
             res.send({ biografer: rows })

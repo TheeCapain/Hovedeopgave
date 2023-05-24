@@ -1,7 +1,7 @@
 <script>
     import { Router, Link } from "svelte-navigator";
     import { onMount } from "svelte";
-
+    import { user } from "../../assets/stores";
     let cinemaList = [];
     let selectedCinema = [];
     let newName;
@@ -27,7 +27,7 @@
             cinemaStatus: selectedCinema.status_id,
             cinemaAddress: selectedCinema.address_id,
             cinemaOpened: selectedCinema.cinema_opened,
-            cinemaClosed: selectedCinema.cinema_closed
+            cinemaClosed: selectedCinema.cinema_closed,
         };
         let response = await fetch("http://localhost:8080/api/biograf/update", {
             method: "PUT",
@@ -59,8 +59,30 @@
         );
         addressList = response.addresses;
     });
+
+    function handleLogout() {
+        $user = null;
+    }
 </script>
 
+<aside
+    class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar"
+>
+    <div
+        class="h-screen px-3 py-4 overflow-y-auto bg-gray-700 dark:bg-gray-800"
+    >
+        <ul>
+            <li>
+                <button
+                    type="button"
+                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    on:click={handleLogout}>Log ud</button
+                >
+            </li>
+        </ul>
+    </div>
+</aside>
 <div class="ml-64 overflow-x-auto">
     <ul
         class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"

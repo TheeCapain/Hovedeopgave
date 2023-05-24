@@ -1,13 +1,12 @@
 <script>
     import { useNavigate, useLocation } from "svelte-navigator";
     import { user } from "../assets/stores";
+    import Toastr from "toastr";
     const navigate = useNavigate();
     const location = useLocation();
 
     let username;
     let password;
-
-
 
     async function handleSubmit() {
         const userLogin = {
@@ -22,6 +21,7 @@
             body: JSON.stringify(userLogin),
         }).then((response) => response.json());
         if (response.user) {
+            Toastr.success("test");
             let login = response.user;
             $user = { login };
             localStorage.setItem("admin", JSON.stringify($user));
@@ -33,9 +33,18 @@
     }
 </script>
 
+<aside
+    class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar"
+>
+    <div
+        class="h-screen px-3 py-4 overflow-y-auto bg-gray-700 dark:bg-gray-800"
+    />
+</aside>
+
 <div class="ml-72 overflow-x-auto">
     <h1>Admin</h1>
-    <form >
+    <form>
         <input
             bind:value={username}
             type="text"

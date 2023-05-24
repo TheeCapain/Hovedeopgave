@@ -1,4 +1,5 @@
 <script>
+    import Toastr from "toastr";
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
 
@@ -7,6 +8,8 @@
     let yearEnd = 2023;
     let postNr = "";
     let selectedStatus = "";
+    let order;
+    let orderName;
 
     let resultAmount;
     let cinema_list = [];
@@ -14,15 +17,17 @@
     let statusList = [];
 
     async function searchTheater() {
-        cinema_list = [];
-        console.log(selectedStatus);
+        Toastr.warning("Error: Posts must have a title and Content");
+        console.log(order);
+        console.log(orderName);
         const movie_search = {
             cinemaName: name,
             yearEnd: yearEnd,
             yearStart: yearStart,
             postnr: postNr,
-            // @ts-ignore
             status: selectedStatus,
+            orderColumn: orderName,
+            order: order,
         };
         let response = await fetch("http://localhost:8080/api/biograf/search", {
             method: "POST",
@@ -95,7 +100,7 @@
                         <input
                             type="search"
                             id="default-search"
-                            class="text-slate-100 dark:hover:bg-text-700 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="dark:hover:bg-text-700 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Bio navn"
                             bind:value={name}
                             required
@@ -176,7 +181,7 @@
     </div>
 </aside>
 
-<CinemaTable {cinema_list} />
+<CinemaTable {orderName} {order} {cinema_list} />
 
 <style>
     input {
