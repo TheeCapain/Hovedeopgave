@@ -21,14 +21,13 @@
             body: JSON.stringify(userLogin),
         }).then((response) => response.json());
         if (response.user) {
-            Toastr.success("test");
             let login = response.user;
             $user = { login };
             localStorage.setItem("admin", JSON.stringify($user));
             const from = ($location.state && $location.state.from) || "/admin";
             navigate(from, { replace: true });
         } else {
-            alert("there was an error");
+            Toastr.warning("Wrong login");
         }
     }
 </script>

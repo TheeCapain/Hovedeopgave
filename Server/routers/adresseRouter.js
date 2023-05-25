@@ -19,8 +19,6 @@ adresseRouter.get("/api/addresses", (req, res) => {
 })
 
 adresseRouter.get("/api/adresse/postnr/range", (req, res) => {
-    console.log(req.body.liste)
-    //FOR LOOP IGENNEM LISTE SENDT FRA FRONTEND?
     db.query('SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode from biorama.cinemas inner join biorama.addresses ON address_id = fk_address_id WHERE address_postcode = 2000;', (err, rows, fields) => {
         if (err) throw err
         res.send({ postnr: rows })
@@ -28,7 +26,6 @@ adresseRouter.get("/api/adresse/postnr/range", (req, res) => {
 })
 
 adresseRouter.post("/api/address", (req, res) => {
-    console.log(req.body)
     db.query(`insert into addresses(address_road, address_city, address_postcode)
     values(?, ?, ?)`, [req.body.roadName, req.body.cityName, req.body.postCode], (err, rows, fields) => {
         if (err) throw err

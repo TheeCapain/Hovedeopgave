@@ -15,9 +15,10 @@
     let cinema_list = [];
     let postCodeList = [];
     let statusList = [];
+    
 
     async function searchTheater() {
-        Toastr.warning("Error: Posts must have a title and Content");
+        Toastr.success("Test to seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         console.log(order);
         console.log(orderName);
         const movie_search = {

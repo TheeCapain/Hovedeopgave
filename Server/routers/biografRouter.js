@@ -24,8 +24,6 @@ biografRouter.get("/api/biograf", (req, res) => {
 })
 
 biografRouter.post("/api/biograf/id", (req, res) => {
-    console.log("test")
-    console.log(req.body)
     db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description 
     FROM cinemas 
     INNER JOIN addresses 
@@ -40,7 +38,6 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 })
 
 biografRouter.post("/api/biograf", (req, res) => {
-    console.log(req.body)
 
     db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);',
         [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
@@ -58,7 +55,6 @@ biografRouter.post("/api/biograf", (req, res) => {
 })
 
 biografRouter.put("/api/biograf/update", (req, res) => {
-    console.log(req.body)
     db.query(`UPDATE cinemas
     set cinema_name = ?, cinema_alt_names= ?, fk_status_id= ?, fk_address_id= ?, cinema_opened = ?, cinema_closed = ?
     where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => {
@@ -105,7 +101,8 @@ biografRouter.post("/api/biograf/search", (req, res) => {
     AND (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
     AND (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between (?) and (?) or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) > (?))
     AND address_postcode like (?)
-    AND status_description like (?) ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {
+    AND status_description like (?)
+    order by cinema_name ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {
 
             if (err) throw err
             res.send({ biografer: rows })

@@ -1,18 +1,11 @@
 <script>
-    import { Router, Link } from "svelte-navigator";
+    import { Link } from "svelte-navigator";
     import { onMount } from "svelte";
     import { user } from "../../assets/stores";
     let cinemaList = [];
     let selectedCinema = [];
-    let newName;
-    let newAlt;
-    let cinemaId;
-    let cinemaSearched = [];
-    let cinema_name;
-
     let statusList = [];
     let addressList = [];
-    let selectedStatus;
     let selectedaddress;
     let opened;
     let closed;
@@ -64,7 +57,6 @@
         $user = null;
     }
 </script>
-
 <aside
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"

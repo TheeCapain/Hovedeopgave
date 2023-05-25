@@ -20,7 +20,7 @@ userRouter.post("/api/login", async (req, res) => {
             let userpassword = rows[0].user_password
             console.log(userpassword)
 
-            if (comparePassword("123", String(userpassword)))
+            if (comparePassword(req.body.password, String(userpassword)))
                 console.log("Compared is true")
             res.status(200).send({ user: rows[0] })
         } else {

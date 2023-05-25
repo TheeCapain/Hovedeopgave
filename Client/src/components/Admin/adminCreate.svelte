@@ -1,13 +1,10 @@
 <script>
-    import { Router, Link } from "svelte-navigator";
+    import Toastr from "toastr";
     import { onMount } from "svelte";
-    import AdminUpdate from "./adminUpdate.svelte";
     import { user } from "../../assets/stores";
 
     let cinema_name;
     let alt_name;
-    let status_id;
-
     let statusList = [];
     let addressList = [];
     let selectedStatus;
@@ -16,22 +13,26 @@
     let closed;
 
     async function addCinema() {
-        const new_cinema = {
-            cinemaName: cinema_name,
-            cinemaAlt: alt_name,
-            statusId: selectedStatus,
-            addressId: selectedaddress,
-            opened: opened,
-            closed: closed
-
-        };
-        let response = await fetch("http://localhost:8080/api/biograf", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(new_cinema),
-        }).then((response) => response.json());
+        console.log(cinema_name)
+        if (cinema_name === undefined) {
+            Toastr.error("Error: Cinema must have a name");
+        } else {
+            const new_cinema = {
+                cinemaName: cinema_name,
+                cinemaAlt: alt_name,
+                statusId: selectedStatus,
+                addressId: selectedaddress,
+                opened: opened,
+                closed: closed,
+            };
+            let response = await fetch("http://localhost:8080/api/biograf", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(new_cinema),
+            }).then((response) => response.json());
+        }
     }
 
     onMount(async function biografStatus() {
@@ -39,7 +40,7 @@
             (response) => response.json()
         );
         statusList = response.status;
-        console.log(statusList)
+        console.log(statusList);
     });
 
     onMount(async function adresses() {
@@ -47,12 +48,13 @@
             (response) => response.json()
         );
         addressList = response.addresses;
-    })
+    });
 
     function handleLogout() {
         $user = null;
     }
 </script>
+
 <aside
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
@@ -172,7 +174,6 @@
 
                 <select
                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-               
                     bind:value={selectedaddress}
                 >
                     {#each addressList as address}

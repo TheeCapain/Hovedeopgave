@@ -44,7 +44,6 @@ movieRouter.post("/api/premieres/search", (req, res) => {
     Country_name like ? AND
     distributor_name like ? and
     rating like ?
-    
     `, [movieName, req.body.yearStart, req.body.yearEnd, country, distributor, rating], (err, rows, fields) => {
         if (err) throw err
         res.send({ movies: rows })

@@ -1,6 +1,7 @@
 <script>
     import { Link } from "svelte-navigator";
     import { user } from "../../assets/stores";
+    import toastr from "toastr";
     let roadName;
     let cityName;
     let postCode;
@@ -18,6 +19,7 @@
             },
             body: JSON.stringify(newAddress),
         }).then((response) => response.json());
+        toastr.success("Addresse er oprettet")
     }
 
     function handleLogout() {
