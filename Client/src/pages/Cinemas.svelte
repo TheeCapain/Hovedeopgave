@@ -15,10 +15,35 @@
     let cinema_list = [];
     let postCodeList = [];
     let statusList = [];
-    
+
+    //Dette skal forstås
+    function convertArrayOfObjectsToCSV(array) {
+        const header = Object.keys(array[0]); // Extract the header (property names) from the first object
+        const csvRows = array.map((obj) =>
+            header.map((field) => JSON.stringify(obj[field])).join(",")
+        ); // Convert each object to a comma-separated string
+        return [header.join(","), ...csvRows].join("\n"); // Join the header and rows with line breaks
+    }
+
+    function downloadCSV(csvContent, fileName) {
+        const blob = new Blob([csvContent], {
+            type: "text/csv;charset=utf-8;",
+        }); // Create a blob from the CSV content
+        const link = document.createElement("a"); // Create a link element
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob); // Create a URL for the blob
+            link.setAttribute("href", url); // Set the link's href attribute to the URL
+            link.setAttribute("download", fileName); // Set the link's download attribute to the desired file name
+            link.style.visibility = "hidden"; // Hide the link
+            link.click(); // Trigger the click event
+        }
+    }
+    function downloadSearch() {
+        const csvContent = convertArrayOfObjectsToCSV(cinema_list);
+        downloadCSV(csvContent, "cinedata.csv");
+    }
 
     async function searchTheater() {
-        Toastr.success("Test to seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         console.log(order);
         console.log(orderName);
         const movie_search = {
@@ -175,7 +200,15 @@
                     on:click={searchTheater}
                     type="button"
                     class="w-full text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >Search</button
+                    >Søg</button
+                >
+            </li>
+            <li>
+                <button
+                    on:click={downloadSearch}
+                    type="button"
+                    class="w-full text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >Download søgning som CSV</button
                 >
             </li>
         </ul>
