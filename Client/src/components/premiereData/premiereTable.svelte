@@ -153,6 +153,74 @@
             });
         }
     }
+
+    function sortPremierePeriod() {
+        if (order === "asc") {
+            premiereList = premiereList.sort((a, b) => {
+                let fa = a.Premiere_period.toLowerCase(),
+                    fb = b.Premiere_period.toLowerCase();
+
+                if (fa < fb) {
+                    return -1;
+                }
+
+                if (fa > fb) {
+                    return 1;
+                }
+                order = "desc";
+                return 0;
+            });
+        } else if (order === "desc") {
+            premiereList = premiereList.sort((a, b) => {
+                let fa = a.Premiere_period.toLowerCase(),
+                    fb = b.Premiere_period.toLowerCase();
+
+                if (fa > fb) {
+                    return -1;
+                }
+
+                if (fa < fb) {
+                    return 1;
+                }
+                order = "asc";
+                return 0;
+            });
+        }
+    }
+
+    function sortRating() {
+        if (order === "asc") {
+            premiereList = premiereList.sort((a, b) => {
+                let fa = a.rating.toLowerCase(),
+                    fb = b.rating.toLowerCase();
+
+                if (fa < fb) {
+                    return -1;
+                }
+
+                if (fa > fb) {
+                    return 1;
+                }
+                order = "desc";
+                return 0;
+            });
+        } else if (order === "desc") {
+            premiereList = premiereList.sort((a, b) => {
+                let fa = a.rating.toLowerCase(),
+                    fb = b.rating.toLowerCase();
+
+                if (fa > fb) {
+                    return -1;
+                }
+
+                if (fa < fb) {
+                    return 1;
+                }
+                order = "asc";
+                return 0;
+            });
+        }
+    }
 </script>
 
 <div class="ml-64 overflow-x-auto">
@@ -197,8 +265,20 @@
                         >År</button
                     ></th
                 >
-                <th scope="col" class="px-6 py-3">Premierebiograf</th>
-                <th scope="col" class="px-6 py-3">Censur</th>
+                <th scope="col" class="px-6 py-3">
+                    <button
+                        on:click={sortPremierePeriod}
+                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                        >Premiere biograf</button
+                    ></th
+                >
+                <th scope="col" class="px-6 py-3">
+                    <button
+                        on:click={sortRating}
+                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                        >Censur</button
+                    ></th
+                >
             </tr>
         </thead>
         <tbody>
