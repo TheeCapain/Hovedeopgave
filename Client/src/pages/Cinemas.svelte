@@ -182,7 +182,7 @@
     </div>
 </aside>
 
-<CinemaTable {orderName} {order} {cinema_list} />
+<CinemaTable {cinema_list} />
 
 <style>
     input {

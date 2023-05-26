@@ -1,4 +1,5 @@
 <script>
+    import { Link } from "svelte-navigator";
     import Toastr from "toastr";
     import { onMount } from "svelte";
     import { user } from "../../assets/stores";

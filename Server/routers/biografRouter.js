@@ -11,13 +11,14 @@ biografRouter.get("/api/test", (req, res) => {
 })
 
 biografRouter.get("/api/biograf", (req, res) => {
-    db.query(`SELECT cinema_id,cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
-    FROM biorama.cinemas 
-    INNER JOIN biorama.addresses 
-    ON address_id = fk_address_id 
-    INNER JOIN biorama.status 
-    ON status_id = fk_status_id
-    ORDER BY cinema_name;;`, (err, rows, fields) => {
+    db.query(`SELECT cinema_id, cinema_name, alt_name, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
+    FROM cinemas INNER JOIN addresses
+        ON address_id = fk_address_id
+        INNER JOIN status
+        ON status_id = fk_status_id
+        INNER JOIN cinema_alt_names
+        ON fk_cinema_id = cinema_id
+        ORDER BY cinema_name;`, (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
     })
@@ -95,14 +96,14 @@ biografRouter.post("/api/biograf/search", (req, res) => {
 
         db.query(`SELECT cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode, status_description
     FROM cinemas
-    INNER JOIN biorama.addresses ON address_id = fk_address_id
-    INNER JOIN biorama.status ON status_id = fk_status_id
+    INNER JOIN addresses ON address_id = fk_address_id
+    INNER JOIN status ON status_id = fk_status_id
     WHERE cinema_name LIKE (?)
     AND (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
     AND (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between (?) and (?) or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) > (?))
     AND address_postcode like (?)
     AND status_description like (?)
-    order by cinema_name ;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {
+    order by cinema_name;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {
 
             if (err) throw err
             res.send({ biografer: rows })

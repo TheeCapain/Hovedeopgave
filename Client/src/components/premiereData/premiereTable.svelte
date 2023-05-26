@@ -1,6 +1,8 @@
 <script>
     import PremiereData from "./premiereData.svelte";
     export let premiereList = [];
+
+
 </script>
 
 <div class="ml-64 overflow-x-auto">
