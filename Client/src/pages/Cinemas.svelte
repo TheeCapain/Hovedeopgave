@@ -16,26 +16,26 @@
     let postCodeList = [];
     let statusList = [];
 
-    //Dette skal forstås
+
     function convertArrayOfObjectsToCSV(array) {
-        const header = Object.keys(array[0]); // Extract the header (property names) from the first object
+        const header = Object.keys(array[0]);
         const csvRows = array.map((obj) =>
             header.map((field) => JSON.stringify(obj[field])).join(",")
-        ); // Convert each object to a comma-separated string
-        return [header.join(","), ...csvRows].join("\n"); // Join the header and rows with line breaks
+        ); 
+        return [header.join(","), ...csvRows].join("\n");
     }
 
     function downloadCSV(csvContent, fileName) {
         const blob = new Blob([csvContent], {
             type: "text/csv;charset=utf-8;",
-        }); // Create a blob from the CSV content
-        const link = document.createElement("a"); // Create a link element
+        }); 
+        const link = document.createElement("a"); 
         if (link.download !== undefined) {
-            const url = URL.createObjectURL(blob); // Create a URL for the blob
-            link.setAttribute("href", url); // Set the link's href attribute to the URL
-            link.setAttribute("download", fileName); // Set the link's download attribute to the desired file name
-            link.style.visibility = "hidden"; // Hide the link
-            link.click(); // Trigger the click event
+            const url = URL.createObjectURL(blob); 
+            link.setAttribute("href", url); 
+            link.setAttribute("download", fileName); 
+            link.style.visibility = "hidden"; 
+            link.click(); 
         }
     }
     function downloadSearch() {
