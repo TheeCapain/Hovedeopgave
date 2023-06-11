@@ -19,13 +19,16 @@
             },
             body: JSON.stringify(newAddress),
         }).then((response) => response.json());
-        toastr.success("Addresse er oprettet")
+        if (response.ok) {
+            toastr.success("Addresse er oprettet");
+        }
     }
 
     function handleLogout() {
         $user = null;
     }
 </script>
+
 <aside
     class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"

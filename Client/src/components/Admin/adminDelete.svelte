@@ -4,28 +4,20 @@
     import { user } from "../../assets/stores";
     let cinemaList = [];
     let selectedCinema = [];
-    let statusList = [];
-    let addressList = [];
-    let selectedaddress;
     let opened;
     let closed;
 
     async function deleteCinema() {
-        const cinemaupdates = {
+        console.log(selectedCinema.cinema_id)
+        const cinemaDelete = {
             cinemaId: selectedCinema.cinema_id,
-            cinemaName: selectedCinema.cinema_name,
-            cinemaAlt: selectedCinema.cinema_alt_names,
-            cinemaStatus: selectedCinema.status_id,
-            cinemaAddress: selectedCinema.address_id,
-            cinemaOpened: selectedCinema.cinema_opened,
-            cinemaClosed: selectedCinema.cinema_closed,
         };
-        let response = await fetch("http://localhost:8080/api/biograf/update", {
-            method: "PUT",
+        let response = await fetch("http://localhost:8080/api/biograf/delete", {
+            method: "DELETE",
             headers: {
                 "content-type": "application/json",
             },
-            body: JSON.stringify(cinemaupdates),
+            body: JSON.stringify(cinemaDelete),
         }).then((response) => response.json());
     }
 
@@ -34,21 +26,6 @@
             (response) => response.json()
         );
         cinemaList = response.biografer;
-    });
-
-    onMount(async function status() {
-        let response = await fetch("http://localhost:8080/api/statusId").then(
-            (response) => response.json()
-        );
-        statusList = response.status;
-        console.log(statusList);
-    });
-
-    onMount(async function adresses() {
-        let response = await fetch("http://localhost:8080/api/addresses").then(
-            (response) => response.json()
-        );
-        addressList = response.addresses;
     });
 
     function handleLogout() {

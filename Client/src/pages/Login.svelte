@@ -48,22 +48,26 @@
 </aside>
 
 <div class="ml-72 overflow-x-auto">
-    <h1>Admin</h1>
-    <form>
-        <input
-            bind:value={username}
-            type="text"
-            name="username"
-            placeholder="Username"
-        />
-        <br />
-        <input
-            bind:value={password}
-            type="password"
-            name="password"
-            placeholder="Password"
-        />
-        <br />
-        <button type="button" on:click={handleSubmit}>Login</button>
-    </form>
+    <div
+  class="block max-w-sm rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+        <h1>Admin</h1>
+        <form>
+            <input
+                bind:value={username}
+                type="text"
+                name="username"
+                placeholder="Username"
+
+            />
+            <br />
+            <input
+                bind:value={password}
+                type="password"
+                name="password"
+                placeholder="Password"
+            />
+            <br />
+            <button type="button" on:click={handleSubmit}>Login</button>
+        </form>
+    </div>
 </div>

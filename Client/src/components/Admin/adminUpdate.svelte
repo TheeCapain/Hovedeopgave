@@ -2,6 +2,7 @@
     import { Link } from "svelte-navigator";
     import { onMount } from "svelte";
     import { user } from "../../assets/stores";
+    import toastr from "toastr";
     let cinemaList = [];
     let selectedCinema = [];
     let statusList = [];
@@ -11,6 +12,7 @@
     let closed;
 
     async function updateCinema() {
+        console.log(selectedCinema)
         const cinemaupdates = {
             cinemaId: selectedCinema.cinema_id,
             cinemaName: selectedCinema.cinema_name,
@@ -27,6 +29,10 @@
             },
             body: JSON.stringify(cinemaupdates),
         }).then((response) => response.json());
+
+        if(response){
+            toastr.success("Biografen blev opdateret")
+        }
     }
 
     onMount(async function biograf() {

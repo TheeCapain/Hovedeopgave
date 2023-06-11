@@ -3,21 +3,12 @@ import db from '../connection.js';
 
 const biografRouter = new Router();
 
-biografRouter.get("/api/test", (req, res) => {
-    db.query(`Select * from status`, (err, rows, fields) => {
-        if (err) throw err
-        res.send({ biografer: rows })
-    })
-})
-
 biografRouter.get("/api/biograf", (req, res) => {
-    db.query(`SELECT cinema_id, cinema_name, alt_name, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
+    db.query(`SELECT cinema_id, cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
     FROM cinemas INNER JOIN addresses
         ON address_id = fk_address_id
         INNER JOIN status
         ON status_id = fk_status_id
-        INNER JOIN cinema_alt_names
-        ON fk_cinema_id = cinema_id
         ORDER BY cinema_name;`, (err, rows, fields) => {
         if (err) throw err
         res.send({ biografer: rows })
@@ -56,20 +47,16 @@ biografRouter.post("/api/biograf", (req, res) => {
 })
 
 biografRouter.put("/api/biograf/update", (req, res) => {
-    db.query(`UPDATE cinemas
+    console.log("test")
+    try {
+        db.query(`UPDATE cinemas
     set cinema_name = ?, cinema_alt_names= ?, fk_status_id= ?, fk_address_id= ?, cinema_opened = ?, cinema_closed = ?
-    where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => {
-            if (err) {
-                console.log("Error" + err)
-                res.status(400).send({
-                    message: "Could not update cinema"
-                })
-            } else {
+    where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => {            }
+        res.status(200).send({ message: "Biografen blev opdateret" })
+    } catch (error) {
+        console.log(error)
+    }
 
-                res.send({ status: rows })
-
-            }
-        }
 })
 
 
@@ -125,7 +112,8 @@ biografRouter.post("/api/biograf/year", (req, res) => {
         })
 })
 
-biografRouter.delete("/api/biograf", (req, res) => {
+biografRouter.delete("/api/biograf/delete", (req, res) => {
+    console.log(req.body)
     console.log("Deleted")
 })
 
