@@ -9,6 +9,11 @@
     let password;
 
     async function handleSubmit() {
+        console.log(password);
+        if (password === undefined) {
+            password = "";
+        }
+
         const userLogin = {
             username: username,
             password: password,
@@ -24,7 +29,8 @@
             let login = response.user;
             $user = { login };
             localStorage.setItem("admin", JSON.stringify($user));
-            const from = ($location.state && $location.state.from) || "/admin";
+            const from =
+                ($location.state && $location.state.from) || "/newCinema";
             navigate(from, { replace: true });
         } else {
             Toastr.warning("Wrong login");

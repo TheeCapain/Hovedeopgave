@@ -62,7 +62,7 @@ biografRouter.put("/api/biograf/update", (req, res) => {
             if (err) {
                 console.log("Error" + err)
                 res.status(400).send({
-                    message: "Could not create cinema"
+                    message: "Could not update cinema"
                 })
             } else {
 
@@ -99,8 +99,10 @@ biografRouter.post("/api/biograf/search", (req, res) => {
     INNER JOIN addresses ON address_id = fk_address_id
     INNER JOIN status ON status_id = fk_status_id
     WHERE cinema_name LIKE (?)
-    AND (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
+    AND ((YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) between (?) and (?) or YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y')) < (?))
     AND (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))between (?) and (?) or YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y')) > (?))
+    OR (YEAR(STR_TO_DATE(cinema_closed, '%d.%m.%Y'))) = ''
+    OR (YEAR(STR_TO_DATE(cinema_opened, '%d.%m.%Y'))) = '')
     AND address_postcode like (?)
     AND status_description like (?)
     order by cinema_name;`, [cinemaname, yearStart, yearEnd, yearStart, yearStart, yearEnd, yearEnd, postnr, status,], (err, rows, fields) => {

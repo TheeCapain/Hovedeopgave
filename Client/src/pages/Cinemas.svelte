@@ -17,7 +17,7 @@
     let statusList = [];
 
 
-    function convertArrayOfObjectsToCSV(array) {
+    function convertToCSV(array) {
         const header = Object.keys(array[0]);
         const csvRows = array.map((obj) =>
             header.map((field) => JSON.stringify(obj[field])).join(",")
@@ -39,7 +39,7 @@
         }
     }
     function downloadSearch() {
-        const csvContent = convertArrayOfObjectsToCSV(cinema_list);
+        const csvContent = convertToCSV(cinema_list);
         downloadCSV(csvContent, "cinedata.csv");
     }
 

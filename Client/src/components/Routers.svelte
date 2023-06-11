@@ -4,6 +4,7 @@
     import Admin from "../pages/Admin.svelte";
     import AdminCreate from "./Admin/adminCreate.svelte";
     import AdminUpdate from "./Admin/adminUpdate.svelte";
+    import AdminDelete from "./Admin/adminDelete.svelte";
     import Cinemas from "../pages/Cinemas.svelte";
     import Premieres from "../pages/Premieres.svelte";
     import Login from "../pages/Login.svelte";
@@ -16,7 +17,7 @@
         {#if !$user}
             <Login />
         {:else}
-            <Admin />
+            <AdminCreate />
         {/if}
     </Route>
     <PrivateRoute path="admin">
@@ -27,6 +28,9 @@
     </Route>
     <PrivateRoute path="newCinema">
         <AdminCreate />
+    </PrivateRoute>
+    <PrivateRoute path="deleteCinema">
+        <AdminDelete />
     </PrivateRoute>
     <PrivateRoute path="update">
         <AdminUpdate />

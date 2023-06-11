@@ -1,43 +1,42 @@
 <script>
     import { Link } from "svelte-navigator";
-    import Toastr from "toastr";
     import { onMount } from "svelte";
     import { user } from "../../assets/stores";
-
-    let cinema_name;
-    let alt_name;
+    let cinemaList = [];
+    let selectedCinema = [];
     let statusList = [];
     let addressList = [];
-    let selectedStatus;
     let selectedaddress;
     let opened;
     let closed;
 
-    async function addCinema() {
-        console.log(cinema_name)
-        if (cinema_name === undefined) {
-            Toastr.error("Error: Cinema must have a name");
-        } else {
-            const new_cinema = {
-                cinemaName: cinema_name,
-                cinemaAlt: alt_name,
-                statusId: selectedStatus,
-                addressId: selectedaddress,
-                opened: opened,
-                closed: closed,
-            };
-            let response = await fetch("http://localhost:8080/api/biograf", {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                },
-                body: JSON.stringify(new_cinema),
-            }).then((response) => response.json());
-            Toastr.success("Cinema was created")
-        }
+    async function deleteCinema() {
+        const cinemaupdates = {
+            cinemaId: selectedCinema.cinema_id,
+            cinemaName: selectedCinema.cinema_name,
+            cinemaAlt: selectedCinema.cinema_alt_names,
+            cinemaStatus: selectedCinema.status_id,
+            cinemaAddress: selectedCinema.address_id,
+            cinemaOpened: selectedCinema.cinema_opened,
+            cinemaClosed: selectedCinema.cinema_closed,
+        };
+        let response = await fetch("http://localhost:8080/api/biograf/update", {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(cinemaupdates),
+        }).then((response) => response.json());
     }
 
-    onMount(async function biografStatus() {
+    onMount(async function biograf() {
+        let response = await fetch("http://localhost:8080/api/biograf").then(
+            (response) => response.json()
+        );
+        cinemaList = response.biografer;
+    });
+
+    onMount(async function status() {
         let response = await fetch("http://localhost:8080/api/statusId").then(
             (response) => response.json()
         );
@@ -82,7 +81,7 @@
         <li class="mr-2">
             <Link to="/newCinema">
                 <h1
-                    class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
+                    class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                 >
                     Opret ny biograf
                 </h1>
@@ -100,7 +99,7 @@
         <li class="mr-2">
             <Link to="/deleteCinema">
                 <h1
-                    class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                    class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-blue-500"
                 >
                     Fjern biograf
                 </h1>
@@ -117,6 +116,25 @@
         </li>
     </ul>
 
+    <div>
+        <h3
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+            Find biograf
+        </h3>
+
+        <select
+            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Vælg biograf"
+            bind:value={selectedCinema}
+        >
+            {#each cinemaList as cinema}
+                <option value={cinema}>
+                    {cinema.cinema_name}
+                </option>
+            {/each}
+        </select>
+    </div>
     <form>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
@@ -130,8 +148,8 @@
                     id="first_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Biograf navn"
-                    bind:value={cinema_name}
-                    required
+                    bind:value={selectedCinema.cinema_name}
+                    disabled
                 />
             </div>
             <div>
@@ -145,49 +163,43 @@
                     id="last_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Alternative"
-                    bind:value={alt_name}
+                    bind:value={selectedCinema.cinema_alt_names}
+                    disabled
                 />
             </div>
             <div>
-                <h3
+                <label
+                    for="last_name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Status</label
                 >
-                    Status
-                </h3>
-
-                <select
-                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Vælg status"
-                    bind:value={selectedStatus}
-                >
-                    {#each statusList as status}
-                        <option value={status.status_id}>
-                            {status.status_description}
-                        </option>
-                    {/each}
-                </select>
+                <input
+                    type="text"
+                    id="last_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Alternative"
+                    bind:value={selectedCinema.status_description}
+                    disabled
+                />
             </div>
             <div>
-                <h3
+                <label
+                    for="last_name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Status</label
                 >
-                    Adresse
-                </h3>
-
-                <select
-                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    bind:value={selectedaddress}
-                >
-                    {#each addressList as address}
-                        <option value={address.address_id}>
-                            {address.address_road +
-                                ", " +
-                                address.address_postcode +
-                                ", " +
-                                address.address_city}
-                        </option>
-                    {/each}
-                </select>
+                <input
+                    type="text"
+                    id="last_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Alternative"
+                    value={selectedCinema.address_road +
+                        ", " +
+                        selectedCinema.address_postcode +
+                        ", " +
+                        selectedCinema.address_city}
+                    disabled
+                />
             </div>
             <div>
                 <label for="start">Start date:</label>
@@ -198,17 +210,20 @@
                     name="trip-start"
                     bind:value={opened}
                     min="1900-01-01"
+                    disabled
                 />
                 <input
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={opened}
-                    bind:value={opened}
+                    bind:value={selectedCinema.cinema_opened}
+                    disabled
                 />
             </div>
             <div>
                 <label for="start">Lukke dato:</label>
 
                 <input
+                    disabled
                     type="date"
                     id="start"
                     name="trip-start"
@@ -218,15 +233,15 @@
                 <input
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={closed}
-                    bind:value={closed}
+                    bind:value={selectedCinema.cinema_closed}
+                    disabled
                 />
             </div>
         </div>
         <button
-            on:click={addCinema}
             type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Opret biograf</button
+            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            on:click={deleteCinema}>Slet biograf</button
         >
     </form>
 </div>

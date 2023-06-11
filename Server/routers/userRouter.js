@@ -13,9 +13,9 @@ userRouter.get("/api/users", (req, res) => {
 })
 
 userRouter.post("/api/login", async (req, res) => {
-
     db.query('SELECT * from users where user_name = (?);', [req.body.username], (err, rows, fields) => {
-        if (rows[0].user_password) {
+
+        if (rows[0] != undefined) {
             console.log(rows[0].user_password)
             let userpassword = rows[0].user_password
             console.log(userpassword)
@@ -24,7 +24,7 @@ userRouter.post("/api/login", async (req, res) => {
                 console.log("Compared is true")
             res.status(200).send({ user: rows[0] })
         } else {
-            res.status(400).send({ user: "Wrong info" })
+            res.status(400).send({ message: "Wrong info" })
         }
         if (err) throw err
     })

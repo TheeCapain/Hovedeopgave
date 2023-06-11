@@ -68,11 +68,11 @@
             </Link>
         </li>
         <li class="mr-2">
-            <Link to="/newCinema">
+            <Link to="/deleteCinema">
                 <h1
                     class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                 >
-                    fjern biograf
+                    Fjern biograf
                 </h1>
             </Link>
         </li>
@@ -81,7 +81,7 @@
                 <h1
                     class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
                 >
-                    ny addresse
+                    Ny addresse
                 </h1>
             </Link>
         </li>
@@ -139,7 +139,7 @@
             on:click={addAddress}
             type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Submit</button
+            >Opret Adresse</button
         >
     </form>
 </div>
