@@ -5,8 +5,8 @@
     import { convertToCSV, downloadCSV } from "../assets/stores";
 
     let name = "";
-    let yearStart = 1900;
-    let yearEnd = 2023;
+    let yearStart = "1900";
+    let yearEnd = new Date().getFullYear();
     let postNr = "";
     let selectedStatus = "";
     let order;

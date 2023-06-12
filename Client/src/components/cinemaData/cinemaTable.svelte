@@ -1,16 +1,8 @@
 <script>
     import CinemaData from "./cinemaData.svelte";
     export let cinema_list = [];
-    let data = [
-        ["Name", "Age", "City"],
-        ["John Doe", 30, "New York"],
-        ["Jane Smith", 25, "San Francisco"],
-        ["Bob Johnson", 40, "London"],
-    ];
-    let tempList = [];
     let order = "asc";
 
-    
     function sortName() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
@@ -232,7 +224,6 @@
 </script>
 
 <div class="ml-64 overflow-x-auto">
-
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"

@@ -34,11 +34,8 @@
             movieName: movieName,
             yearEnd: yearEnd,
             yearStart: yearStart,
-            // @ts-ignore
             country: selectedCountry,
-            // @ts-ignore
             distributor: selectedDistributør,
-            // @ts-ignore
             rating: selectedRating,
         };
         let response = await fetch(

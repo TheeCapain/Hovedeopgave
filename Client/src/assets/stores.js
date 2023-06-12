@@ -2,9 +2,9 @@ import { writable } from "svelte/store";
 
 export const user = writable(null);
 
-export function convertToCSV(array) {
-    const header = Object.keys(array[0]);
-    const csvRows = array.map((obj) =>
+export function convertToCSV(searchResult) {
+    const header = Object.keys(searchResult[0]);
+    const csvRows = searchResult.map((obj) =>
         header.map((field) => JSON.stringify(obj[field])).join(",")
     );
     return [header.join(","), ...csvRows].join("\n");

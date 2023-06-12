@@ -25,6 +25,7 @@
             },
             body: JSON.stringify(userLogin),
         }).then((response) => response.json());
+        console.log(response.status)
         if (response.user) {
             let login = response.user;
             $user = { login };
