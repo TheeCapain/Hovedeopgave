@@ -1,7 +1,8 @@
 <script>
     import { onMount } from "svelte";
+    import Toastr from "toastr";
     import PremiereTable from "../components/premiereData/premiereTable.svelte";
-
+    import { convertToCSV, downloadCSV } from "../assets/stores";
     let movieName = "";
     let yearStart = 1900;
     let yearEnd = 2023;
@@ -14,31 +15,10 @@
     let distributorList = [];
     let resultAmount;
 
-    //Dette skal forstås
-    function convertArrayOfObjectsToCSV(array) {
-        const header = Object.keys(array[0]);
-        const csvRows = array.map((obj) =>
-            header.map((field) => JSON.stringify(obj[field])).join(",")
-        );
-        return [header.join(","), ...csvRows].join("\n");
-    }
-
-    function downloadCSV(csvContent, fileName) {
-        const blob = new Blob([csvContent], {
-            type: "text/csv;charset=utf-8;",
-        });
-        const link = document.createElement("a"); 
-            if (link.download !== undefined) {
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName); 
-            link.style.visibility = "hidden";
-            link.click();
-        }
-    }
     function downloadSearch() {
-        const csvContent = convertArrayOfObjectsToCSV(premiereList);
+        const csvContent = convertToCSV(premiereList);
         downloadCSV(csvContent, "premiereData.csv");
+        Toastr.success("Resultater eksportere");
     }
 
     onMount(async function getMovies() {

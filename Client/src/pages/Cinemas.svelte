@@ -2,6 +2,7 @@
     import Toastr from "toastr";
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
+    import { convertToCSV, downloadCSV } from "../assets/stores";
 
     let name = "";
     let yearStart = 1900;
@@ -16,31 +17,10 @@
     let postCodeList = [];
     let statusList = [];
 
-
-    function convertToCSV(array) {
-        const header = Object.keys(array[0]);
-        const csvRows = array.map((obj) =>
-            header.map((field) => JSON.stringify(obj[field])).join(",")
-        ); 
-        return [header.join(","), ...csvRows].join("\n");
-    }
-
-    function downloadCSV(csvContent, fileName) {
-        const blob = new Blob([csvContent], {
-            type: "text/csv;charset=utf-8;",
-        }); 
-        const link = document.createElement("a"); 
-        if (link.download !== undefined) {
-            const url = URL.createObjectURL(blob); 
-            link.setAttribute("href", url); 
-            link.setAttribute("download", fileName); 
-            link.style.visibility = "hidden"; 
-            link.click(); 
-        }
-    }
     function downloadSearch() {
         const csvContent = convertToCSV(cinema_list);
         downloadCSV(csvContent, "cinedata.csv");
+        Toastr.success("Resultater eksportere")
     }
 
     async function searchTheater() {
