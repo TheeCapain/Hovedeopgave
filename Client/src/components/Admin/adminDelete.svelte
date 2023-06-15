@@ -2,13 +2,13 @@
     import { Link } from "svelte-navigator";
     import { onMount } from "svelte";
     import { user } from "../../assets/stores";
+    import toastr from "toastr";
     let cinemaList = [];
     let selectedCinema = [];
     let opened;
     let closed;
 
     async function deleteCinema() {
-        console.log(selectedCinema.cinema_id)
         const cinemaDelete = {
             cinemaId: selectedCinema.cinema_id,
         };
@@ -19,6 +19,7 @@
             },
             body: JSON.stringify(cinemaDelete),
         }).then((response) => response.json());
+        toastr.success("Biografen blev fjernet");
     }
 
     onMount(async function biograf() {
@@ -116,13 +117,13 @@
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label
-                    for="first_name"
+                    for="biografName"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Biograf Navn</label
                 >
                 <input
                     type="text"
-                    id="first_name"
+                    id="biografName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Biograf navn"
                     bind:value={selectedCinema.cinema_name}
@@ -131,30 +132,30 @@
             </div>
             <div>
                 <label
-                    for="last_name"
+                    for="AltName"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Alternative navne</label
                 >
                 <input
                     type="text"
-                    id="last_name"
+                    id="AltName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Alternative"
-                    bind:value={selectedCinema.cinema_alt_names}
+                    bind:value={selectedCinema.cinema_alt_name}
                     disabled
                 />
             </div>
             <div>
                 <label
-                    for="last_name"
+                    for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Status</label
                 >
                 <input
                     type="text"
-                    id="last_name"
+                    id="description"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Alternative"
+                    placeholder="status"
                     bind:value={selectedCinema.status_description}
                     disabled
                 />

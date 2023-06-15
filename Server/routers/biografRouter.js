@@ -30,7 +30,7 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 })
 
 biografRouter.post("/api/biograf", (req, res) => {
-
+    console.log(req.body)
     db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);',
         [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
             if (err) {
@@ -51,7 +51,7 @@ biografRouter.put("/api/biograf/update", (req, res) => {
     try {
         db.query(`UPDATE cinemas
     set cinema_name = ?, cinema_alt_names= ?, fk_status_id= ?, fk_address_id= ?, cinema_opened = ?, cinema_closed = ?
-    where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => {            }
+    where cinema_id = ?;`, [req.body.cinemaName, req.body.cinemaAlt, req.body.cinemaStatus, req.body.cinemaAddress, req.body.cinemaOpened, req.body.cinemaClosed, req.body.cinemaId]), (err, rows, fields) => { }
         res.status(200).send({ message: "Biografen blev opdateret" })
     } catch (error) {
         console.log(error)
@@ -114,7 +114,12 @@ biografRouter.post("/api/biograf/year", (req, res) => {
 
 biografRouter.delete("/api/biograf/delete", (req, res) => {
     console.log(req.body)
-    console.log("Deleted")
+    db.query("DELETE FROM cinemas WHERE cinema_id=?",
+        [req.body.cinemaId], (err, rows, fields) => {
+            res.status(200).send({ biografer: "" })
+            if (err) throw err
+
+        })
 })
 
 export default biografRouter
