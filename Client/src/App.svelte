@@ -1,12 +1,12 @@
 <script>
   import { Router, Route, Link } from "svelte-navigator";
-  import 'toastr/build/toastr.css';
+  import { useNavigate, useLocation } from "svelte-navigator";
+  import "toastr/build/toastr.css";
   import "flowbite";
   import "./app.css";
   import Routers from "./components/Routers.svelte";
 
 </script>
-
 
 <link href="toastr.css" rel="stylesheet" />
 <aside

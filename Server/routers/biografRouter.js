@@ -4,7 +4,7 @@ import db from '../connection.js';
 const biografRouter = new Router();
 
 biografRouter.get("/api/biograf", (req, res) => {
-    db.query(`SELECT cinema_id, cinema_name, cinema_alt_names, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
+    db.query(`SELECT cinema_id, cinema_name, cinema_opened, cinema_closed,status_id,status_description,address_id, address_road, address_city, address_postcode, status_description
     FROM cinemas INNER JOIN addresses
         ON address_id = fk_address_id
         INNER JOIN status
