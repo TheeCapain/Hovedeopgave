@@ -5,6 +5,7 @@
   import "flowbite";
   import "./app.css";
   import Routers from "./components/Routers.svelte";
+  import { onMount } from "svelte";
 
 </script>
 
