@@ -30,7 +30,6 @@ biografRouter.post("/api/biograf/id", (req, res) => {
 })
 
 biografRouter.post("/api/biograf", (req, res) => {
-    console.log(req.body)
     db.query('INSERT INTO cinemas(cinema_name, cinema_alt_names, cinema_opened, cinema_closed, fk_status_id, fk_address_id) VALUES (?,?,?,?,?,?);',
         [req.body.cinemaName, req.body.cinemaAlt, req.body.opened, req.body.closed, req.body.statusId, req.body.addressId], (err, rows, fields) => {
             if (err) {
@@ -47,7 +46,6 @@ biografRouter.post("/api/biograf", (req, res) => {
 })
 
 biografRouter.put("/api/biograf/update", (req, res) => {
-    console.log("test")
     try {
         db.query(`UPDATE cinemas
     set cinema_name = ?, cinema_alt_names= ?, fk_status_id= ?, fk_address_id= ?, cinema_opened = ?, cinema_closed = ?
@@ -58,7 +56,6 @@ biografRouter.put("/api/biograf/update", (req, res) => {
     }
 
 })
-
 
 biografRouter.post("/api/biograf/search", (req, res) => {
     try {
