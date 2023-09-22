@@ -1,6 +1,7 @@
 <script>
     import CinemaData from "./cinemaData.svelte";
     export let cinema_list = [];
+
     let order = "asc";
 
     function sortName() {
@@ -302,10 +303,10 @@
                             cinemaName={cinema.cinema_name}
                             closedDate={cinema.cinema_closed}
                             openedDate={cinema.cinema_opened}
-                            cinemaStatus={cinema.status_description}
-                            cinemaAdress={cinema.address_road}
-                            cinemaPostNr={cinema.address_postcode}
-                            cinemaBy={cinema.address_city}
+                            cinemaStatus={cinema.status.status_description}
+                            cinemaAdress={cinema.addresses.address_road}
+                            cinemaPostNr={cinema.addresses.address_postcode}
+                            cinemaBy={cinema.addresses.address_city}
                         />
                     {/if}
                 {/each}

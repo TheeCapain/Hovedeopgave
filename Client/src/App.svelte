@@ -1,11 +1,9 @@
 <script>
-  import { Router, Route, Link } from "svelte-navigator";
-  import { useNavigate, useLocation } from "svelte-navigator";
   import "toastr/build/toastr.css";
   import "flowbite";
   import "./app.css";
   import Routers from "./components/Routers.svelte";
-  import { onMount } from "svelte";
+  
 
 </script>
 

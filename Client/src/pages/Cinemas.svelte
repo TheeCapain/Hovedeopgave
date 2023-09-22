@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import CinemaTable from "../components/cinemaData/cinemaTable.svelte";
     import { convertToCSV, downloadCSV } from "../assets/stores";
+    import { supabase } from "../assets/stores";
 
     let name = "";
     let yearStart = "1900";
@@ -11,7 +12,6 @@
     let selectedStatus = "";
     let order;
     let orderName;
-
     let resultAmount;
     let cinema_list = [];
     let postCodeList = [];
@@ -20,12 +20,57 @@
     function downloadSearch() {
         const csvContent = convertToCSV(cinema_list);
         downloadCSV(csvContent, "cinedata.csv");
-        Toastr.success("Resultater eksportere")
+        Toastr.success("Resultater eksportere");
+    }
+
+    async function test2() {
+        try {
+            const { data, error } = await supabase
+                .from("cinemas")
+                .select(
+                    `cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode,
+                    addresses(address_road, address_city,address_postcode),
+                    status(status_description)`
+                )
+                .like("cinema_name", "%" + name + "%");
+
+            if (error) {
+                throw new Error(error.message);
+            }
+            cinema_list = data;
+            resultAmount = cinema_list.length;
+            return data;
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    }
+
+    async function test() {
+        try {
+            let { data, error } = await supabase
+                .from("cinemas")
+                .select(
+                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses!inner(address_road, address_city, address_postcode),status!inner(status_description)`
+                )
+                .ilike("cinema_name", "%" + name + "%")
+                .ilike("addresses.address_postcode", "%" + postNr + "%")
+                .ilike("status.status_description", "%" + selectedStatus + "%");
+
+            if (error) {
+                throw new Error(error.message);
+            }
+            console.log(data);
+            cinema_list = data;
+            resultAmount = cinema_list.length;
+            return data;
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
     }
 
     async function searchTheater() {
-        console.log(order);
-        console.log(orderName);
         const movie_search = {
             cinemaName: name,
             yearEnd: yearEnd,
@@ -46,26 +91,55 @@
         resultAmount = cinema_list.length;
     }
 
-    onMount(async function getBiografer() {
-        let response = await fetch("http://localhost:8080/api/biograf").then(
-            (response) => response.json()
-        );
-        cinema_list = response.biografer;
-        resultAmount = cinema_list.length;
+    onMount(async function getCinemas() {
+        try {
+            let { data, error } = await supabase
+                .from("cinemas")
+                .select(
+                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses(address_road, address_city,address_postcode),status(status_description)`
+                );
+            if (error) {
+                throw new Error(error.message);
+            }
+            cinema_list = data;
+            resultAmount = cinema_list.length;
+            return data;
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
     });
 
     onMount(async function biograpostnr() {
-        let response = await fetch(
-            "http://localhost:8080/api/adresse/postnr"
-        ).then((response) => response.json());
-        postCodeList = response.postnr;
+        try {
+            let { data, error } = await supabase
+                .from("addresses")
+                .select("address_postcode, address_city");
+            if (error) {
+                throw new Error(error.message);
+            }
+
+            return (postCodeList = data);
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
     });
 
     onMount(async function biografStatus() {
-        let response = await fetch("http://localhost:8080/api/status").then(
-            (response) => response.json()
-        );
-        statusList = response.status;
+        try {
+            let { data, error } = await supabase
+                .from("status")
+                .select("status_description");
+            if (error) {
+                throw new Error(error.message);
+            }
+
+            statusList = data;
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
     });
 </script>
 
@@ -177,7 +251,7 @@
             </li>
             <li>
                 <button
-                    on:click={searchTheater}
+                    on:click={test}
                     type="button"
                     class="w-full text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >Søg</button

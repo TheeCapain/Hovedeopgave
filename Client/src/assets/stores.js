@@ -1,4 +1,8 @@
 import { writable } from "svelte/store";
+import { createClient } from "@supabase/supabase-js";
+import dotenv from 'dotenv'
+
+
 
 export const user = writable(null);
 
@@ -23,3 +27,8 @@ export function downloadCSV(csvContent, fileName) {
         link.click();
     }
 }
+
+export const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_KEY
+);

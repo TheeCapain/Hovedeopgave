@@ -13,7 +13,7 @@
 </script>
 
 <Router>
-    <Route path="login">
+    <!--<Route path="login">
         {#if !$user}
             <Login />
         {:else}
@@ -23,9 +23,6 @@
     <PrivateRoute path="admin">
         <Admin />
     </PrivateRoute>
-    <Route path="cinemas">
-        <Cinemas />
-    </Route>
     <PrivateRoute path="newCinema">
         <AdminCreate />
     </PrivateRoute>
@@ -36,8 +33,12 @@
         <AdminUpdate />
     </PrivateRoute>
     <PrivateRoute path="newAddress">
-        <AddressCreate/>
+        <AddressCreate />
     </PrivateRoute>
+    -->
+    <Route path="cinemas">
+        <Cinemas />
+    </Route>
     <Route path="premieres">
         <Premieres />
     </Route>
@@ -48,12 +49,11 @@
     class="fixed top-0 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
-    <div
-        class="h-full px-3 py-4 overflow-y-auto bg-slate-700 dark:bg-gray-800"
-    >
+    <div class="h-full px-3 py-4 overflow-y-auto bg-slate-700 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <Router>
                 <Link to="/login">
+                    <!--
                     <li>
                         <a
                             href="/"
@@ -83,6 +83,7 @@
                             >
                         </a>
                     </li>
+                    -->
                 </Link>
                 <Link to="/cinemas">
                     <li>
