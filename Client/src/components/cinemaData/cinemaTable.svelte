@@ -6,6 +6,7 @@
 
     function sortName() {
         if (order === "asc") {
+            console.log("sorting names asc");
             cinema_list = cinema_list.sort((a, b) => {
                 let fa = a.cinema_name.toLowerCase(),
                     fb = b.cinema_name.toLowerCase();
@@ -21,6 +22,7 @@
                 return 0;
             });
         } else if (order === "desc") {
+            console.log("sorting names desc");
             cinema_list = cinema_list.sort((a, b) => {
                 let fa = a.cinema_name.toLowerCase(),
                     fb = b.cinema_name.toLowerCase();
@@ -41,8 +43,8 @@
     function sortAddress() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.address_road.toLowerCase(),
-                    fb = b.address_road.toLowerCase();
+                let fa = a.addresses.address_road.toLowerCase(),
+                    fb = b.addresses.address_road.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -56,8 +58,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.address_road.toLowerCase(),
-                    fb = b.address_road.toLowerCase();
+                let fa = a.addresses.address_road.toLowerCase(),
+                    fb = b.addresses.address_road.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -75,8 +77,8 @@
     function sortCity() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.address_city.toLowerCase(),
-                    fb = b.address_city.toLowerCase();
+                let fa = a.addresses.address_city.toLowerCase(),
+                    fb = b.addresses.address_city.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -90,8 +92,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.address_city.toLowerCase(),
-                    fb = b.address_city.toLowerCase();
+                let fa = a.addresses.address_city.toLowerCase(),
+                    fb = b.addresses.address_city.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -109,14 +111,16 @@
     function sortPostNr() {
         console.log(order);
         if (order === "asc") {
+            console.log(cinema_list[0]);
             cinema_list = cinema_list.sort((a, b) => {
+                console.log(a.addresses.address_postcode);
                 order = "desc";
-                return b.address_postcode - a.address_postcode;
+                return b.addresses.address_postcode - a.addresses.address_postcode;
             });
         } else if (order === "desc") {
             order = "asc";
             cinema_list = cinema_list.sort((a, b) => {
-                return a.address_postcode - b.address_postcode;
+                return a.addresses.address_postcode - b.addresses.address_postcode;
             });
         }
     }
@@ -192,8 +196,8 @@
     function sortStatus() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.status_description.toLowerCase(),
-                    fb = b.status_description.toLowerCase();
+                let fa = a.status.status_description.toLowerCase(),
+                    fb = b.status.status_description.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -207,8 +211,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.status_description.toLowerCase(),
-                    fb = b.status_description.toLowerCase();
+                let fa = a.status.status_description.toLowerCase(),
+                    fb = b.status.status_description.toLowerCase();
 
                 if (fa > fb) {
                     return -1;

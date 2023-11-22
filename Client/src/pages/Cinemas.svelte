@@ -34,6 +34,8 @@
                 .ilike("cinema_name", "%" + name + "%")
                 .ilike("addresses.address_postcode", "%" + postNr + "%")
                 .ilike("status.status_description", "%" + selectedStatus + "%")
+                .ilike("cinema_opened", "%" + yearStart)
+                .ilike("cinema_closed", "%" + yearEnd)
                 .order("cinema_name");
             if (error) {
                 throw new Error(error.message);
@@ -48,7 +50,7 @@
         }
     }
 
-    async function searchTheater() {
+    /* async function searchTheater() {
         const movie_search = {
             cinemaName: name,
             yearEnd: yearEnd,
@@ -68,6 +70,7 @@
         cinema_list = response.biografer;
         resultAmount = cinema_list.length;
     }
+    */
 
     onMount(async function getCinemas() {
         try {
