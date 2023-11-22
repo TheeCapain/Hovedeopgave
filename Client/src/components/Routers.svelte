@@ -39,9 +39,11 @@
     <Route path="cinemas">
         <Cinemas />
     </Route>
+    <!--
     <Route path="premieres">
         <Premieres />
     </Route>
+-->
 </Router>
 
 <aside
@@ -112,6 +114,7 @@
                         </a>
                     </li>
                 </Link>
+                <!--
                 <Link to="/premieres">
                     <li>
                         <a
@@ -141,6 +144,7 @@
                         </a>
                     </li>
                 </Link>
+            -->
             </Router>
         </ul>
     </div>

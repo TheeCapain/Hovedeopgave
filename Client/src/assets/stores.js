@@ -1,7 +1,5 @@
 import { writable } from "svelte/store";
 import { createClient } from "@supabase/supabase-js";
-import dotenv from 'dotenv'
-
 
 
 export const user = writable(null);

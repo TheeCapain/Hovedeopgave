@@ -23,30 +23,8 @@
         Toastr.success("Resultater eksportere");
     }
 
-    async function test2() {
-        try {
-            const { data, error } = await supabase
-                .from("cinemas")
-                .select(
-                    `cinema_name, cinema_opened, cinema_closed, address_road, address_city, address_postcode,
-                    addresses(address_road, address_city,address_postcode),
-                    status(status_description)`
-                )
-                .like("cinema_name", "%" + name + "%");
-
-            if (error) {
-                throw new Error(error.message);
-            }
-            cinema_list = data;
-            resultAmount = cinema_list.length;
-            return data;
-        } catch (error) {
-            console.error("Error:", error);
-            throw error;
-        }
-    }
-
     async function test() {
+        console.log(yearStart + " " + yearEnd);
         try {
             let { data, error } = await supabase
                 .from("cinemas")
@@ -55,8 +33,8 @@
                 )
                 .ilike("cinema_name", "%" + name + "%")
                 .ilike("addresses.address_postcode", "%" + postNr + "%")
-                .ilike("status.status_description", "%" + selectedStatus + "%");
-
+                .ilike("status.status_description", "%" + selectedStatus + "%")
+                .order("cinema_name");
             if (error) {
                 throw new Error(error.message);
             }
@@ -144,7 +122,7 @@
 </script>
 
 <aside
-    class="fixed top-36 left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
+    class="fixed left-0 z-40 w-64 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
 >
     <div
