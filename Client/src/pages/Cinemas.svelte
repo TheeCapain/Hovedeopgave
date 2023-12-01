@@ -6,12 +6,10 @@
     import { supabase } from "../assets/stores";
 
     let name = "";
-    let yearStart = "1900";
+    let yearStart = "1905";
     let yearEnd = new Date().getFullYear();
     let postNr = "";
     let selectedStatus = "";
-    let order;
-    let orderName;
     let resultAmount;
     let cinema_list = [];
     let postCodeList = [];
@@ -29,20 +27,21 @@
             let { data, error } = await supabase
                 .from("cinemas")
                 .select(
-                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses!inner(address_road, address_city, address_postcode),status!inner(status_description)`
+                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses!inner(address_road, address_city, address_postcode),status!inner(status_description)`,
                 )
                 .ilike("cinema_name", "%" + name + "%")
                 .ilike("addresses.address_postcode", "%" + postNr + "%")
                 .ilike("status.status_description", "%" + selectedStatus + "%")
-                .ilike("cinema_opened", "%" + yearStart)
-                .ilike("cinema_closed", "%" + yearEnd)
+                .gte("cinema_opened", "%" + yearStart)
+                .lt("cinema_closed", yearEnd + "%")
                 .order("cinema_name");
             if (error) {
                 throw new Error(error.message);
             }
-            console.log(data);
+
             cinema_list = data;
             resultAmount = cinema_list.length;
+            console.log(cinema_list);
             return data;
         } catch (error) {
             console.error("Error:", error);
@@ -77,7 +76,7 @@
             let { data, error } = await supabase
                 .from("cinemas")
                 .select(
-                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses(address_road, address_city,address_postcode),status(status_description)`
+                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses(address_road, address_city,address_postcode),status(status_description)`,
                 );
             if (error) {
                 throw new Error(error.message);
@@ -178,6 +177,16 @@
                     >
                 </li>
             {/if}
+            <li>
+                <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Bio Navn"
+                    bind:value={name}
+                    required
+                />
+            </li>
 
             <li>
                 <span class="ml-3">
