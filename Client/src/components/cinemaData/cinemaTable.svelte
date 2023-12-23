@@ -1,15 +1,14 @@
 <script>
     import CinemaData from "./cinemaData.svelte";
     export let cinema_list = [];
-
     let order = "asc";
 
     function sortName() {
         if (order === "asc") {
             console.log("sorting names asc");
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_name.toLowerCase(),
-                    fb = b.cinema_name.toLowerCase();
+                let fa = a.Biograf.toLowerCase(),
+                    fb = b.Biograf.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -24,8 +23,8 @@
         } else if (order === "desc") {
             console.log("sorting names desc");
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_name.toLowerCase(),
-                    fb = b.cinema_name.toLowerCase();
+                let fa = a.Biograf.toLowerCase(),
+                    fb = b.Biograf.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -43,8 +42,8 @@
     function sortAddress() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.addresses.address_road.toLowerCase(),
-                    fb = b.addresses.address_road.toLowerCase();
+                let fa = a.Adresse.toLowerCase(),
+                    fb = b.Adresse.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -58,8 +57,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.addresses.address_road.toLowerCase(),
-                    fb = b.addresses.address_road.toLowerCase();
+                let fa = a.Adresse.toLowerCase(),
+                    fb = b.Adresse.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -77,8 +76,8 @@
     function sortCity() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.addresses.address_city.toLowerCase(),
-                    fb = b.addresses.address_city.toLowerCase();
+                let fa = a.By.toLowerCase(),
+                    fb = b.By.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -92,8 +91,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.addresses.address_city.toLowerCase(),
-                    fb = b.addresses.address_city.toLowerCase();
+                let fa = a.By.toLowerCase(),
+                    fb = b.By.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -113,14 +112,14 @@
         if (order === "asc") {
             console.log(cinema_list[0]);
             cinema_list = cinema_list.sort((a, b) => {
-                console.log(a.addresses.address_postcode);
+ 
                 order = "desc";
-                return b.addresses.address_postcode - a.addresses.address_postcode;
+                return b.Postnr - a.Postnr;
             });
         } else if (order === "desc") {
             order = "asc";
             cinema_list = cinema_list.sort((a, b) => {
-                return a.addresses.address_postcode - b.addresses.address_postcode;
+                return a.Postnr - b.Postnr;
             });
         }
     }
@@ -128,8 +127,8 @@
     function sortOpened() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_opened.toLowerCase(),
-                    fb = b.cinema_opened.toLowerCase();
+                let fa = a.Åbnet.toLowerCase(),
+                    fb = b.Åbnet.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -143,8 +142,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_opened.toLowerCase(),
-                    fb = b.cinema_opened.toLowerCase();
+                let fa = a.Åbnet.toLowerCase(),
+                    fb = b.Åbnet.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -162,8 +161,8 @@
     function sortClosed() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_closed.toLowerCase(),
-                    fb = b.cinema_closed.toLowerCase();
+                let fa = a.Lukket.toLowerCase(),
+                    fb = b.Lukket.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -177,8 +176,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.cinema_closed.toLowerCase(),
-                    fb = b.cinema_closed.toLowerCase();
+                let fa = a.Lukket.toLowerCase(),
+                    fb = b.Lukket.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -196,8 +195,8 @@
     function sortStatus() {
         if (order === "asc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.status.status_description.toLowerCase(),
-                    fb = b.status.status_description.toLowerCase();
+                let fa = a.Status.toLowerCase(),
+                    fb = b.Status.toLowerCase();
 
                 if (fa < fb) {
                     return -1;
@@ -211,8 +210,8 @@
             });
         } else if (order === "desc") {
             cinema_list = cinema_list.sort((a, b) => {
-                let fa = a.status.status_description.toLowerCase(),
-                    fb = b.status.status_description.toLowerCase();
+                let fa = a.Status.toLowerCase(),
+                    fb = b.Status.toLowerCase();
 
                 if (fa > fb) {
                     return -1;
@@ -304,13 +303,13 @@
                         </button>
                     {:else}
                         <CinemaData
-                            cinemaName={cinema.cinema_name}
-                            closedDate={cinema.cinema_closed}
-                            openedDate={cinema.cinema_opened}
-                            cinemaStatus={cinema.status.status_description}
-                            cinemaAdress={cinema.addresses.address_road}
-                            cinemaPostNr={cinema.addresses.address_postcode}
-                            cinemaBy={cinema.addresses.address_city}
+                            cinemaName={cinema.Biograf}
+                            closedDate={cinema.Lukket}
+                            openedDate={cinema.Åbnet}
+                            cinemaStatus={cinema.Status}
+                            cinemaAdress={cinema.Adresse}
+                            cinemaPostNr={cinema.Postnr}
+                            cinemaBy={cinema.By}
                         />
                     {/if}
                 {/each}

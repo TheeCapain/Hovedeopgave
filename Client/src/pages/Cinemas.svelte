@@ -25,23 +25,19 @@
         console.log(yearStart + " " + yearEnd);
         try {
             let { data, error } = await supabase
-                .from("cinemas")
+                .from("AllCinemas")
                 .select(
-                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses!inner(address_road, address_city, address_postcode),status!inner(status_description)`,
+                    `*`,
                 )
-                .ilike("cinema_name", "%" + name + "%")
-                .ilike("addresses.address_postcode", "%" + postNr + "%")
-                .ilike("status.status_description", "%" + selectedStatus + "%")
-                .gte("cinema_opened", "%" + yearStart)
-                .lt("cinema_closed", yearEnd + "%")
-                .order("cinema_name");
+                .ilike("Biograf", "%" + name + "%")
+                .ilike("Postnr", "%" + postNr + "%")
+                .ilike("Status", "%" + selectedStatus + "%")
+                .order("Biograf");
             if (error) {
                 throw new Error(error.message);
             }
-
             cinema_list = data;
             resultAmount = cinema_list.length;
-            console.log(cinema_list);
             return data;
         } catch (error) {
             console.error("Error:", error);
@@ -74,14 +70,15 @@
     onMount(async function getCinemas() {
         try {
             let { data, error } = await supabase
-                .from("cinemas")
+                .from("AllCinemas")
                 .select(
-                    `cinema_id, cinema_name, cinema_opened, cinema_closed, addresses(address_road, address_city,address_postcode),status(status_description)`,
+                    `*`,
                 );
             if (error) {
                 throw new Error(error.message);
             }
             cinema_list = data;
+            console.log(cinema_list);
             resultAmount = cinema_list.length;
             return data;
         } catch (error) {
