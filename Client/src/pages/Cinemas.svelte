@@ -14,7 +14,7 @@
     let cinema_list = [];
     let postCodeList = [];
     let statusList = [];
-
+    let order = "asc";
     function downloadSearch() {
         const csvContent = convertToCSV(cinema_list);
         downloadCSV(csvContent, "cinedata.csv");
@@ -44,6 +44,7 @@
             throw error;
         }
     }
+
 
     /* async function searchTheater() {
         const movie_search = {
@@ -76,12 +77,49 @@
             cinema_list = data;
             console.log(cinema_list);
             resultAmount = cinema_list.length;
+            sortName()
             return data;
         } catch (error) {
             console.error("Error:", error);
             throw error;
         }
     });
+
+    function sortName() {
+        if (order === "asc") {
+            console.log("sorting names asc");
+            cinema_list = cinema_list.sort((a, b) => {
+                let fa = a.Biograf.toLowerCase(),
+                    fb = b.Biograf.toLowerCase();
+
+                if (fa < fb) {
+                    return -1;
+                }
+
+                if (fa > fb) {
+                    return 1;
+                }
+                order = "desc";
+                return 0;
+            });
+        } else if (order === "desc") {
+            console.log("sorting names desc");
+            cinema_list = cinema_list.sort((a, b) => {
+                let fa = a.Biograf.toLowerCase(),
+                    fb = b.Biograf.toLowerCase();
+
+                if (fa > fb) {
+                    return -1;
+                }
+
+                if (fa < fb) {
+                    return 1;
+                }
+                order = "asc";
+                return 0;
+            });
+        }
+    }
 
     onMount(async function biograpostnr() {
         try {

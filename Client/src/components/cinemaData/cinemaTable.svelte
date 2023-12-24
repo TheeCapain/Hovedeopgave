@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import CinemaData from "./cinemaData.svelte";
     export let cinema_list = [];
     let order = "asc";
@@ -112,7 +113,6 @@
         if (order === "asc") {
             console.log(cinema_list[0]);
             cinema_list = cinema_list.sort((a, b) => {
- 
                 order = "desc";
                 return b.Postnr - a.Postnr;
             });
