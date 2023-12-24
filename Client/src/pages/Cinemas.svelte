@@ -6,8 +6,8 @@
     import { supabase } from "../assets/stores";
 
     let name = "";
-    let yearStart = "1905";
-    let yearEnd = new Date().getFullYear();
+    let yearStart = "";
+    let yearEnd = "";
     let postNr = "";
     let selectedStatus = "";
     let resultAmount;
@@ -26,12 +26,12 @@
         try {
             let { data, error } = await supabase
                 .from("AllCinemas")
-                .select(
-                    `*`,
-                )
+                .select(`*`)
                 .ilike("Biograf", "%" + name + "%")
                 .ilike("Postnr", "%" + postNr + "%")
                 .ilike("Status", "%" + selectedStatus + "%")
+                .ilike("Åbnet", "%" + yearStart + "%")
+                .ilike("Lukket", "%" + yearEnd + "%")
                 .order("Biograf");
             if (error) {
                 throw new Error(error.message);
@@ -69,11 +69,7 @@
 
     onMount(async function getCinemas() {
         try {
-            let { data, error } = await supabase
-                .from("AllCinemas")
-                .select(
-                    `*`,
-                );
+            let { data, error } = await supabase.from("AllCinemas").select(`*`);
             if (error) {
                 throw new Error(error.message);
             }
@@ -106,8 +102,8 @@
     onMount(async function biografStatus() {
         try {
             let { data, error } = await supabase
-                .from("status")
-                .select("status_description");
+                .from("NewStatus")
+                .select("status");
             if (error) {
                 throw new Error(error.message);
             }
@@ -230,8 +226,8 @@
                     bind:value={selectedStatus}
                 >
                     {#each statusList as status}
-                        <option value={status.status_description}>
-                            {status.status_description}
+                        <option value={status.status}>
+                            {status.status}
                         </option>
                     {/each}
                 </select>

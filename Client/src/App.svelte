@@ -3,6 +3,7 @@
   import "flowbite";
   import "./app.css";
   import Routers from "./components/Routers.svelte";
+  import Cinemas from "./pages/Cinemas.svelte";
   
 
 </script>
@@ -16,4 +17,4 @@
     class="h-screen px-3 py-4 overflow-y-auto bg-gray-700 dark:bg-gray-800"
   />
 </aside>
-<Routers />
+<Cinemas />

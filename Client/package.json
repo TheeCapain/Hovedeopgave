@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "sirv public -s --no-clear",
     "build": "vite build",
     "preview": "vite preview"
   },

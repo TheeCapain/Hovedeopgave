@@ -36,7 +36,7 @@
         <AddressCreate />
     </PrivateRoute>
     -->
-    <Route path="cinemas">
+    <Route path="/cinemas">
         <Cinemas />
     </Route>
     <!--
